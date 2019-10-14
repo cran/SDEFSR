@@ -24,7 +24,6 @@ Car Evaluation Database was derived from a simple hierarchical decision model.
 }
 \examples{
    carTra$data
-   carTra$atributeNames
+   carTra$attributeNames
    
 }
-

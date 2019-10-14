@@ -50,7 +50,7 @@ ruleSet <- MESDIF(paramFile = NULL,
 
 ## ----highlight=FALSE-----------------------------------------------------
 library(ggplot2)
-plotRules(ruleSet)
+plot(ruleSet)
 
 ## ----eval=FALSE----------------------------------------------------------
 #  	rulesOrderedBySignificance <- orderRules(ruleSet, by = "Significance")

@@ -9,7 +9,7 @@ library(shiny)
 
 shinyUI(fluidPage( theme = NULL,
   
-  titlePanel(h1("Subgroup Discovery with Evolutionary Fuzzy Systems in R ", id = "textoPrincipal", align = "center"),windowTitle = "Execute Subgroup Discovery Algorithms with R"), 
+  titlePanel(h1("Subgroup Discovery with Evolutionary Fuzzy Systems ", id = "textoPrincipal", align = "center"),windowTitle = "Execute Subgroup Discovery Algorithms with R"), 
   br(),
   sidebarLayout(
     sidebarPanel( 
@@ -195,6 +195,7 @@ shinyUI(fluidPage( theme = NULL,
                        div(actionButton("displayQMGraph", label = "Show/Hide Graph", style = "background-color:#303F9F;color:#FFFFFF"), align = "center"),
                        uiOutput("plotResultUI"),
                        dataTableOutput("measures")
+                   
           ),
           
           

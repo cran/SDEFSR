@@ -5,11 +5,12 @@
 \title{Non-dominated Multi-objective Evolutionary algorithm for Extracting Fuzzy rules in Subgroup Discovery (NMEEF-SD)}
 \usage{
 NMEEF_SD(paramFile = NULL, training = NULL, test = NULL,
-  output = c("optionsFile.txt", "rulesFile.txt", "testQM.txt"), seed = 0,
-  nLabels = 3, nEval = 10000, popLength = 100, mutProb = 0.1,
-  crossProb = 0.6, Obj1 = "CSUP", Obj2 = "CCNF", Obj3 = "null",
-  minCnf = 0.6, reInitCoverage = "yes", porcCob = 0.5,
-  StrictDominance = "yes", targetVariable = NA, targetClass = "null")
+  output = c("optionsFile.txt", "rulesFile.txt", "testQM.txt"),
+  seed = 0, nLabels = 3, nEval = 10000, popLength = 100,
+  mutProb = 0.1, crossProb = 0.6, Obj1 = "CSUP", Obj2 = "CCNF",
+  Obj3 = "null", minCnf = 0.6, reInitCoverage = "yes",
+  porcCob = 0.5, StrictDominance = "yes", targetVariable = NA,
+  targetClass = "null")
 }
 \arguments{
 \item{paramFile}{The path of the parameters file. \code{NULL} If you want to use training and test \code{SDEFSR_Dataset} variables}
@@ -24,7 +25,7 @@ NMEEF_SD(paramFile = NULL, training = NULL, test = NULL,
 
 \item{nLabels}{Number of linguistic labels for numerical variables.}
 
-\item{nEval}{An integer for set the maximum number of evaluations in the evolutive process.}
+\item{nEval}{An integer for set the maximum number of evaluations in the evolutionary process.}
 
 \item{popLength}{An integer to set the number of individuals in the population.}
 
@@ -42,7 +43,7 @@ NMEEF_SD(paramFile = NULL, training = NULL, test = NULL,
 
 \item{reInitCoverage}{Sets if the algorithm must perform the reinitialitation based on coverage when it is needed. A string with "yes" or "no".}
 
-\item{porcCob}{Sets the maximum percentage of variables that participate in the rules genereted in the reinitialitation based on coverage. A number in [0,1]}
+\item{porcCob}{Sets the maximum percentage of variables that participate in the rules generated in the reinitialitation based on coverage. A number in [0,1]}
 
 \item{StrictDominance}{Sets if the comparison between individuals must be done by strict dominance or not. A string with "yes" or "no".}
 
@@ -81,9 +82,9 @@ This function sets as target variable the last one that appear in \code{SDEFSR_D
     first makes a selection based on binary tournament and save the individuals in a offspring population.
     Then, NMEEF-SD apply the genetic operators over individuals in offspring population
     
-    For generate the population which participate in the next iteration of the evoluationary process
+    For generate the population which participate in the next iteration of the evolutionary process
     NMEEF-SD calculate the dominance among all individuals (join main population and offspring) and then, apply the NSGA-II fast sort algorithm to order
-    the population by fronts of dominance, the first front is the non-dominanted front (or Pareto), the second is 
+    the population by fronts of dominance, the first front is the non-dominated front (or Pareto), the second is 
     where the individuals dominated by one individual are, the thirt front dominated by two and so on.
     
     To promove diversity NMEEF-SD has a mechanism of reinitialization of the population based on coverage
@@ -155,12 +156,13 @@ targetClass = Iris-setosa
     
     If you dont want to use a objetive value you must specify \code{null}
 }
+
 \examples{
  
    NMEEF_SD(paramFile = NULL, 
                training = habermanTra, 
                test = habermanTst, 
-               output = c("optionsFile.txt", "rulesFile.txt", "testQM.txt"),
+               output = c(NA, NA, NA),
                seed = 0, 
                nLabels = 3,
                nEval = 300, 
@@ -201,4 +203,3 @@ targetClass = Iris-setosa
 \references{
 Carmona, C., Gonzalez, P., del Jesus, M., & Herrera, F. (2010). NMEEF-SD: Non-dominated Multi-objective Evolutionary algorithm for Extracting Fuzzy rules in Subgroup Discovery.
 }
-

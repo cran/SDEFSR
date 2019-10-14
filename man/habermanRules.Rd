@@ -24,4 +24,3 @@ The rule set contains only two rules. One for each target variable
 \examples{
     habermanRules
 }
-

@@ -14,11 +14,10 @@ Training data for the german dataset
 }
 \details{
 A numerical version of the Statlog German Credit Data data set. 
-    Here, the task is to clasify customers as good (1) or bad (2), 
+    Here, the task is to classify customers as good (1) or bad (2), 
     depending on 20 features about them and their bancary accounts.
 }
 \examples{
      germanTra$data
      
 }
-

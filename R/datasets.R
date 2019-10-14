@@ -98,7 +98,7 @@ NULL
 #'  
 #' @examples 
 #'    carTra$data
-#'    carTra$atributeNames
+#'    carTra$attributeNames
 #'    
 #' @docType data
 #' @name carTra
@@ -126,8 +126,8 @@ NULL
 #'     ICML-97, Nashville, TN. 1997 (to appear).
 #'  
 #' @examples 
-#'    carTra$data
-#'    carTra$atributeNames
+#'    carTst$data
+#'    carTst$attributeNames
 #'    
 #' @docType data
 #' @name carTst
@@ -143,7 +143,7 @@ NULL
 #' @description Training data for the german dataset
 #' 
 #' @details A numerical version of the Statlog German Credit Data data set. 
-#'     Here, the task is to clasify customers as good (1) or bad (2), 
+#'     Here, the task is to classify customers as good (1) or bad (2), 
 #'     depending on 20 features about them and their bancary accounts.
 #' 
 #' @format A SDEFSR_Dataset class with 800 instances, 20 variables (without the target variable)
@@ -167,7 +167,7 @@ NULL
 #' @description Test data for the german dataset
 #' 
 #' @details A numerical version of the Statlog German Credit Data data set. 
-#'     Here, the task is to clasify customers as good (1) or bad (2), 
+#'     Here, the task is to classify customers as good (1) or bad (2), 
 #'     depending on 20 features about them and their bancary accounts.
 #' 
 #' @format A SDEFSR_Dataset class with 200 instances, 20 variables (without the target variable)

@@ -31,4 +31,3 @@ This data set contains cases from a study that was conducted between 1958 and 19
     habermanTra$fuzzySets
     
 }
-

@@ -494,87 +494,85 @@ read.dataset <- function(file, sep = ",", quote = "\"", dec = ".", na.strings = 
 .show_parameters <- function(params, train, test) {
   #Show parameters in the console
   algo <- params$algorithm
-  cat(
-    "--------------------------------", file = "", sep = " ", fill = TRUE
+  message(
+    "--------------------------------", appendLF = T
   )
-  cat("Algorithm:", algo, file = "", sep = " ", fill = TRUE)
-  cat(
-    "Relation:", train$relation, file = "", sep = " ", fill = TRUE
+  message(paste("Algorithm:", algo), appendLF = T)
+  message(
+    paste("Relation:", train$relation), appendLF = T
   )
-  cat(
-    "Training dataset:", if("inputData" %in% names(params)) params$inputData[1] else substitute(train), file = "", sep = " ", fill = TRUE
+  message(
+    paste("Training dataset:", if("inputData" %in% names(params)) params$inputData[1] else substitute(train)),appendLF = T
+    )
+  message(
+    paste("Test dataset:", if("inputData" %in% names(params)) params$inputData[2] else substitute(test)), appendLF = T
   )
-  cat(
-    "Test dataset:", if("inputData" %in% names(params)) params$inputData[2] else substitute(test), file = "", sep = " ", fill = TRUE
-  )
-  cat(
-    "Rules Representation: ", if (tolower(params$RulesRep) == "can")
+  message(
+    paste("Rules Representation: ", if (tolower(params$RulesRep) == "can")
       "CAN"
     else
-      "DNF", file = "", sep = " ", fill = TRUE
+      "DNF"), appendLF = T
   )
-  cat(
-    "Number of evaluations:", params$nEval, file = "", sep = " ", fill = TRUE
+  message(
+    paste("Number of evaluations:", params$nEval), appendLF = T
   )
-  cat(
-    "Number of fuzzy partitions:", params$nLabels, file = "", sep = " ", fill = TRUE
+  message(
+    paste("Number of fuzzy partitions:", params$nLabels), appendLF = T
   )
-  cat(
-    "Population Length:", params$popLength, file = "", sep = " ", fill = TRUE
+  message(
+    paste("Population Length:", params$popLength), appendLF = T
   )
   if (algo == "MESDIF")  
-    cat(
-      "Elite Population Length:", params$elitePop, file = "", sep = " ", fill = TRUE
+    message(
+      paste("Elite Population Length:", params$elitePop), appendLF = T
     )
   if (algo != "SDIGA")
-    cat(
-      "Crossover Probability:", params$crossProb, file = "", sep = " ", fill = TRUE
+    message(
+      paste("Crossover Probability:", params$crossProb), appendLF = T
     )
-  cat(
-    "Mutation Probability:", params$mutProb, file = "", sep = " ", fill = TRUE
+  message(
+    paste("Mutation Probability:", params$mutProb), appendLF = T
   )
-  cat(
-    "Obj1:", params$Obj1, "  (Weigth:", params$w1,")", file = "", sep = " ", fill = TRUE
+  message(
+    paste("Obj1:", params$Obj1, "  (Weigth:", params$w1,")"), appendLF = T
   )
-  cat(
-    "Obj2:", params$Obj2, "  (Weigth:", params$w2,")", file = "", sep = " ", fill = TRUE
+  message(
+   paste("Obj2:", params$Obj2, "  (Weigth:", params$w2,")"), appendLF = T
   )
-  cat(
-    "Obj3:", params$Obj3, "  (Weigth:", params$w3,")", file = "", sep = " ", fill = TRUE
+  message(
+    paste("Obj3:", params$Obj3, "  (Weigth:", params$w3,")"), appendLF = T
   )
   if (algo == "MESDIF")
-    cat("Obj4:", params$Obj4, file = "", sep = " ", fill = TRUE)
+    message(paste("Obj4:", params$Obj4),appendLF = T)
   if (algo == "SDIGA")
-    cat(
-      "Local Search optimization?:", params$lSearch, file = "", sep = " ", fill = TRUE
+    message(
+     paste("Local Search optimization?:", params$lSearch),appendLF = T
     )
   if (algo == "NMEEFSD") {
-    cat(
-      "Reinitilization based on coverage?: ", params$reInitPob, file = "", fill = TRUE
-    )
-    cat(
-      "Max Pct of variables in reinitialization: ", as.numeric(params$porcCob) * 100, "%", file = "", fill = TRUE
-    )
-    cat(
-      "Compare individuals using strict dominance? ", params$StrictDominance, file = "", fill = TRUE
+    message(
+      paste("Reinitilization based on coverage?: ", params$reInitPob), appendLF = T
+      )
+    message(
+      paste("Max Pct of variables in reinitialization: ", as.numeric(params$porcCob) * 100, "%"),appendLF = T
     )
   }
-  cat(
-    "Number of examples in training:", train$Ns, file = "", sep = " ", fill = TRUE
+  message(
+   paste("Number of examples in training:", train$Ns), appendLF = T
   )
-  cat(
-    "Number of examples in test:", test$Ns, file = "", sep = " ", fill = TRUE
+  message(
+   paste("Number of examples in test:", test$Ns), appendLF = T
   )
   
-  cat("Target Variable:", params$targetVariable, fill = TRUE)
-  cat("Target Class:", if(params$targetClass == "null") "All Variables" else params$targetClass, fill = TRUE)
-  cat(
-    "--------------------------------", file = "", sep = " ", fill = TRUE
-  )
+  message(paste("Target Variable:", params$targetVariable), appendLF = T)
+  message(paste("Target Class:", if(params$targetClass == "null") "All Variables" else params$targetClass), appendLF = T)
+  message(
+    "--------------------------------", appendLF = T
+    )
   
   
   #Save parameters in the outputFile
   algo <- params$algorithm
+  if(!is.na(params$outputData[1])){
   cat(
     "--------------------------------" , "\n",
     "Algorithm:",algo ,"\n",
@@ -613,6 +611,7 @@ read.dataset <- function(file, sep = ",", quote = "\"", dec = ".", na.strings = 
     "Target Class:", if(params$targetClass == "null") "All Variables" else params$targetClass, "\n",
     "--------------------------------", file = params$outputData[1], sep = " "
   )
+  }
   
 }
 
@@ -678,14 +677,14 @@ read.dataset <- function(file, sep = ",", quote = "\"", dec = ".", na.strings = 
       name <- paste("Variable", name, sep = " ")
       lines <- paste(name, val, sep = " = ")
       lines <- paste(lines, collapse = "\n")
-      cat(
-        lines, "\n","THEN", consecuent, file = "", sep = " ", fill = TRUE
-      )
+      message(
+        paste(lines, "\n","THEN", consecuent), appendLF = T
+        )
       
       #Save in file
-      cat(
-        lines, "\n","THEN", consecuent, file = rulesFile, sep = " ", fill = TRUE, append = TRUE
-      )
+      if(!is.na(rulesFile)){
+      cat(lines, "\n","THEN", consecuent, file = rulesFile, sep = " ", fill = TRUE, append = TRUE)
+      }
       
     } else {
       #Print DNF rule
@@ -722,13 +721,13 @@ read.dataset <- function(file, sep = ",", quote = "\"", dec = ".", na.strings = 
         pos <- pos + 1
         before <- i + 1
       }
-      cat(
-        lines, "\n","THEN", consecuent, file = "", sep = " ", fill = TRUE
+      message(
+        paste(lines, "\n","THEN", consecuent), appendLF = T
       )
       #Save in file
-      cat(
-        lines, "\n","THEN", consecuent, file = rulesFile, sep = " ", fill = TRUE, append = TRUE
-      )
+      if(!is.na(rulesFile)){
+        cat(lines, "\n","THEN", consecuent, file = rulesFile, sep = " ", fill = TRUE, append = TRUE)
+      }
       
     }
   }
@@ -953,7 +952,7 @@ save.SDEFSR_Dataset <- function(dataset, file) {
     file <- paste(file, ".dat", sep = "")
     #Save file
     #get relation name
-    cat("Getting attributes...")
+    message("Getting attributes...", appendLF = T)
     line <- paste("@relation", dataset[[1]])
     
     #get attributes
@@ -985,7 +984,7 @@ save.SDEFSR_Dataset <- function(dataset, file) {
     output <- dataset[[2]][length(dataset[[2]])] # Outputs is the last attribute, the class
     line <- paste(line, "\n", "@inputs ", inputs, "\n", sep = "")
     line <- paste(line, "@outputs ", output, "\n@data",  sep = "")
-    cat("Done\nGetting data (this may take some time)...")
+    message("Done\nGetting data (this may take some time)...", appendLF = T)
     
     #get data
     categ <- which(dataset[[3]] == "c")
@@ -1028,13 +1027,13 @@ save.SDEFSR_Dataset <- function(dataset, file) {
     
     data <- unlist(data)
     line <- paste(line, paste(data, collapse = "\n"), sep = "\n")
-    cat("Done\n")
+    message("Done\n")
     
     #Save file
     cat(line, file = file,  sep = "", append = FALSE)
-    cat("File succesfully saved.")
+    message("File succesfully saved.")
   } else {
-    cat("File not saved.")
+    warning("File not saved.")
   }
 }
 

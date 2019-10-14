@@ -261,7 +261,7 @@
 #' SDIGA(parameters_file = NULL, 
 #'       training = habermanTra, 
 #'       test = habermanTst, 
-#'       output = c("optionsFile.txt", "rulesFile.txt", "testQM.txt"),
+#'       output = c(NA, NA, NA),
 #'       seed = 0, 
 #'       nLabels = 3,
 #'       nEval = 300, 
@@ -390,7 +390,7 @@ SDIGA <- function(parameters_file = NULL,
   training$covered <- logical(training$Ns)
   test$covered <- logical(test$Ns)
   
-  file.remove(parameters$outputData[which(file.exists(parameters$outputData))])
+  #file.remove(parameters$outputData[which(file.exists(parameters$outputData))])
 
   #Determine the representation of the rules (CAN or DNF)
   if(tolower(parameters$RulesRep) == "can"){
@@ -429,11 +429,12 @@ SDIGA <- function(parameters_file = NULL,
     #Check if target class is valid
     targetClass <- parameters$targetClass
     if(! any(training$class_names == targetClass)) stop("No valid target value provided.")
-    cat("\n", "\n", "Searching rules for only one value of the target class...", "\n", "\n", file ="", fill = TRUE)  
+    message("\n\nSearching rules for only one value of the target class...\n\n")  
     
     
-    cat(" - Target value:", targetClass , file = "", sep = " ", fill = TRUE)
-    cat("\n - Target value:", targetClass , file = parameters$outputData[2], sep = " ", fill = TRUE, append = TRUE)
+    message(paste(" - Target value:", targetClass ), appendLF = T)
+    if(!is.na(parameters$outputData[2]))
+      cat("\n - Target value:", targetClass , file = parameters$outputData[2], sep = " ", fill = TRUE, append = TRUE)
     #If it is the  first rule obtained, it must be returned.
     first_rule <- TRUE
     Best = TRUE
@@ -454,20 +455,22 @@ SDIGA <- function(parameters_file = NULL,
         Best <- TRUE
         contador <- contador + 1
         training$covered <- x$covered[[1]]
-        cat("\n"," GENERATED RULE", contador, ":",file = "", sep = " ", fill = TRUE)
-        cat("\n"," GENERATED RULE", contador, ":",file = parameters$outputData[2], sep = " ", fill = TRUE, append = TRUE)
+        message(paste("\n GENERATED RULE", contador, ":"),appendLF = T)
+        if(!is.na(parameters$outputData[2]))
+          cat("\n"," GENERATED RULE", contador, ":",file = parameters$outputData[2], sep = " ", fill = TRUE, append = TRUE)
         .print.rule(rule = rule, max = training$sets, names = training$attributeNames, consecuent = targetClass, types = training$attributeTypes,fuzzySets = training$fuzzySets, categoricalValues = training$categoricalValues, DNF, rulesFile = parameters$outputData[2])
-        cat("\n", file = "")
+    
         rule[length(rule) + 1] <- targetClass
         rules[[contador]] <- rule
         to_cover <- x$porCubrir
         if(to_cover <= 0) Best <- FALSE #If number of examples to cover is zero, it is not neccesary to call the genetic algorithm again.
         
       } else {
-        cat(" GENERATED RULE", ":",file = "", sep = " ", fill = TRUE)
-        cat("# Invalid (Low confidence or support)", "\n","\n", file = "", sep= " ", fill = TRUE)
+        message("\n GENERATED RULE :", appendLF = T)
+        message("# Invalid (Low confidence or support)\n\n")
         
-        cat("\n GENERATED RULE", ":", "\n",
+        if(!is.na(parameters$outputData[2]))
+          cat("\n GENERATED RULE", ":", "\n",
           "# Invalid (Low confidence or support)", "\n", file = parameters$outputData[2], sep= " ", fill = TRUE, append = TRUE)
         
       }
@@ -477,13 +480,14 @@ SDIGA <- function(parameters_file = NULL,
     
     
   } else {  #Execution for all classes
-    cat("\n", "\n", "Searching rules for all values of the target class...", "\n", "\n", file ="", fill = TRUE)  
+    message("\n\nSearching rules for all values of the target class...\n\n")  
     #For each value of the target class execute the algorithm...
     for(i in seq_len(length(training[["class_names"]]))) {
     #for(i in training$class_names[ seq_len(length(training$class_names)) ]){
       targetClass <- training[["class_names"]][i]
-      cat(" - Target value:", targetClass , file = "", sep = " ", fill = TRUE)
-      cat(" \n - Target value:", targetClass , file = parameters$outputData[2], sep = " ", fill = TRUE, append = TRUE)
+      message(paste(" - Target value:", targetClass,"\n"))
+      if(!is.na(parameters$outputData[2]))
+        cat(" \n - Target value:", targetClass , file = parameters$outputData[2], sep = " ", fill = TRUE, append = TRUE)
       first_rule <- TRUE
       Best = TRUE
       #Set the number of examples to cover as the number of examples of the class
@@ -516,10 +520,10 @@ SDIGA <- function(parameters_file = NULL,
           training$covered <- x$covered[[1]]
           
           #Print the rule to the user.
-          cat("\n"," GENERATED RULE", contador, ":",file = "", sep = " ", fill = TRUE)
-          cat("\n"," GENERATED RULE", contador, ":",file = parameters$outputData[2], sep = " ", fill = TRUE, append = TRUE)
+          message(paste("\n GENERATED RULE", contador, ":\n"))
+          if(!is.na(parameters$outputData[2]))
+            cat("\n"," GENERATED RULE", contador, ":",file = parameters$outputData[2], sep = " ", fill = TRUE, append = TRUE)
           .print.rule(rule = rule, max = training$sets, names = training$attributeNames, consecuent = targetClass, types = training$attributeTypes,fuzzySets = training$fuzzySets, categoricalValues = training$categoricalValues, DNF, rulesFile = parameters$outputData[2])
-          cat("\n", file = "")
           
           #Add the target class to the end of the rule and add it to the list of rules.
           rule[length(rule) + 1] <- targetClass
@@ -529,10 +533,10 @@ SDIGA <- function(parameters_file = NULL,
           
         } else {
           #If the rule is not valid, report the user this situation
-          cat(" GENERATED RULE", ":",file = "", sep = " ", fill = TRUE)
-          cat("# Invalid (Low confidence or support)", "\n","\n", file = "", sep= " ", fill = TRUE)
-          
-          cat("\n GENERATED RULE", ":", "\n",
+          message(" GENERATED RULE:\n")
+          message("# Invalid (Low confidence or support)\n\n")
+          if(!is.na(parameters$outputData[2]))
+            cat("\n GENERATED RULE", ":", "\n",
               "# Invalid (Low confidence or support)", "\n","\n", file = parameters$outputData[2], sep= " ", fill = TRUE, append = TRUE)
           
         }
@@ -545,7 +549,7 @@ SDIGA <- function(parameters_file = NULL,
   
   #---------------------------------------------------
   
-  cat("\n", "\n", "Testing rules...", "\n", "\n", file = "", sep = " ", fill = TRUE)
+  message("\n\nTesting rules...\n\n")
   
   #--------  Test Rules  --------------------
   # accumulated values to print the 'Global' result as the mean value of each rule
@@ -596,8 +600,8 @@ SDIGA <- function(parameters_file = NULL,
   
   
   #Print Global Quality Measures as the mean value of the set of rules
-  cat("Global:", file ="", fill = TRUE)
-  cat(paste("\t - N_rules:", length(rules), sep = " "),
+  message("Global:\n")
+  message(paste(paste("\t - N_rules:", length(rules), sep = " "),
       paste("\t - N_vars:", round(sumNvars / n_rules, 6), sep = " "),
       paste("\t - Coverage:", round(sumCov / n_rules, 6), sep = " "),
       paste("\t - Significance:", round(sumSign / n_rules, 6), sep = " "),
@@ -609,10 +613,11 @@ SDIGA <- function(parameters_file = NULL,
       paste("\t - CConfidence:", round(sumCconf / n_rules, 6), sep = " "),
       paste("\t - True Positive Rate:", round(sumTpr / n_rules, 6), sep = " "),
       paste("\t - False Positive Rate:", round(sumFpr / n_rules, 6), sep = " "),
-      file = "", sep = "\n"
+      sep = "\n")
   )
   
  #Save the global result to a file
+  if(!is.na(parameters$outputData[3])){
   cat( "Global:",
      paste("\t - N_rules:", length(rules), sep = " "),
       paste("\t - N_vars:", round(sumNvars / n_rules, 6), sep = " "),
@@ -628,6 +633,7 @@ SDIGA <- function(parameters_file = NULL,
       paste("\t - False Positive Rate:", round(sumFpr / n_rules, 6), sep = " "),
       file = parameters$outputData[3], sep = "\n", append = TRUE
   )
+  }
   
   
   
@@ -681,8 +687,8 @@ SDIGA <- function(parameters_file = NULL,
   }
   
   #Print the quality measures on console
-  cat("Rule", numRule,":", file = "", sep = " ", fill = TRUE)
-  cat(paste("\t - N_vars:", nVars, sep = " "),
+  message(paste("Rule", numRule,":\n"))
+  message(paste(paste("\t - N_vars:", nVars, sep = " "),
       paste("\t - Coverage:", Cov, sep = " "),
       paste("\t - Significance:", sig, sep = " "),
       paste("\t - Unusualness:", unus, sep = " "),
@@ -693,13 +699,13 @@ SDIGA <- function(parameters_file = NULL,
       paste("\t - FConfidence:", Fcnf, sep = " "),
       paste("\t - True Positive Rate:", tpr, sep = " "),
       paste("\t - False Positive Rate:", fpr, "\n", sep = " "),
-    file = "", sep = "\n"
+    sep = "\n")
   )
-  cat("\n", file = "", sep = "\n")
   
   
   
   #Save the measures in a file
+  if(!is.na(parameters$outputData[3])){
   cat(paste("Rule", numRule,":"),
       paste("\t - N_vars:", nVars, sep = " "),
       paste("\t - Coverage:", Cov, sep = " "),
@@ -714,6 +720,7 @@ SDIGA <- function(parameters_file = NULL,
       paste("\t - False Positive Rate:", fpr, "\n", sep = " "),
       file = parameters$outputData[3], sep = "\n", append = TRUE
   )
+  }
   
 #Return
     list( covered = testSet[["covered"]], 

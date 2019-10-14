@@ -333,7 +333,7 @@ shinyServer(function(input, output, session) {
       # - Numeric vs numeric:  Scatter plots
       if(data$attributeTypes[pos1] == "c" & data$attributeTypes[pos1] == "c"){
       #Categorigcal vs categorical
-          mat <- print(data)
+          mat <- as.data.frame(data)
           plot(x = as.factor(mat[,pos1]), 
                y = as.factor(mat[,pos2]),
                col = colorsWithContrast,   #Change this colors to other with high contrast
@@ -414,7 +414,7 @@ shinyServer(function(input, output, session) {
       ranges1 <<- 1:ncol(dataMatrix)
       ranges2 <<- 1:ncol(dataMatrix)
     }
-     } , error = function(e) print(e)) #If an error occur, shows to the user the error.
+     } , error = function(e) warning(e)) #If an error occur, shows to the user the error.
    }
  })
   
@@ -730,9 +730,9 @@ shinyServer(function(input, output, session) {
     
     },
     error = function(e){
-      cat(as.character(e), file = "rulesFile.txt")
-      cat(as.character(e), file = "optionsFile.txt")
-      cat(as.character(e), file = "testQualityMeasures.txt")
+      message(as.character(e), file = "rulesFile.txt")
+      message(as.character(e), file = "optionsFile.txt")
+      message(as.character(e), file = "testQualityMeasures.txt")
       return(NULL)
     }
     )
@@ -798,24 +798,20 @@ shinyServer(function(input, output, session) {
     input$execute
     if(input$execute > 0){
       #Generate a matrix for each measure of the ruleSet by rows
-    dataMatrix <- t(sapply(ruleSet, function(x) c(x$qualityMeasures$nVars,
-                                                  x$qualityMeasures$Coverage,
-                                                  x$qualityMeasures$Unusualness,
-                                                  x$qualityMeasures$Significance,
-                                                  x$qualityMeasures$FuzzySupport,
-                                                  x$qualityMeasures$FuzzyConfidence,
-                                                  x$qualityMeasures$CrispConfidence,
-                                                  x$qualityMeasures$Tpr,
-                                                  x$qualityMeasures$Fpr)))
+    dataMatrix <- t(sapply(ruleSet, function(x) as.numeric(x$qualityMeasures)))
+    colnames(dataMatrix) <- names(ruleSet[[1]]$qualityMeasures)
     
     #Add means on the last row and return
-    dataMatrix <- rbind(dataMatrix, colMeans(dataMatrix))
-    dataMatrix <- cbind(c(1:length(ruleSet), "MEAN: "), dataMatrix)
-    colnames(dataMatrix) <- c("Rule_Number", "Num_Variables", "Coverage", "Unusualness", "Significance", "Fuzzy_Support", "Fuzzy_Confidence", "Crisp_Confidence", "TPR","FPR")
-    as.data.frame(dataMatrix)
+    #dataMatrix <- rbind(dataMatrix, colMeans(dataMatrix))
+    
+    dataMatrix <- cbind(Rule_Number = c(1:length(ruleSet)), dataMatrix)
+    #colnames(dataMatrix) <- c("Rule_Number", "Num_Variables", "Coverage", "Unusualness", "Significance", "Fuzzy_Support", "Fuzzy_Confidence", "Crisp_Confidence", "TPR","FPR")
+    #rownames(dataMatrix) <- c(1:length(ruleSet), "MEAN: ")
+    dataMatrix <- as.data.frame(dataMatrix)
+    
+    dataMatrix
     }
-  })
-  
+  } )
   
   # UI FOR PLOTTING QUALITY MEASURES
   output$plotResultUI <- renderUI({
@@ -831,7 +827,7 @@ shinyServer(function(input, output, session) {
 #PLOT OF THE QUALITY MEASURES 
 #Here the plot is generated
   output$rulesPlot <- renderPlot({
-    print(SDEFSR::plotRules(ruleSet))
+    print(plot(ruleSet))
   })
   
   

@@ -15,6 +15,10 @@
 }
 \value{
 a matrix with the dataset uncoded.
+ 
+ @examples
+ 
+ print(habermanTra)
 }
 \description{
 S3 function to print in console the contents of the dataset
@@ -25,4 +29,3 @@ S3 function to print in console the contents of the dataset
 This function show the matix of data. Internally, a \code{SDEFSR_Dataset} object has a list of of examples
  and this examples are coded numerically. This function decode these examples and convert the list into a matrix.
 }
-

@@ -32,7 +32,7 @@
 #' @param t_norm The T-norm to use to compute the compatibility degree. 0 for minimum t-norm. Other value for product t-norm
 #' 
 #' @return A vector with length 'number of examples' indicating their compatibility degree.
-#' 
+#' @noRd
 Rule.compatibility <- function(example, rule_cat, rule_num, catParticip, numParticip, xmin, xmedio, xmax, n_matrices, max_cat, max_num, t_norm){
   dispFuzzy <- numeric(NCOL(example)) + 1
   
@@ -531,7 +531,7 @@ changeTargetVariable <- function(dataset, variable){
 
 #'
 #' Returns the class attribute of the examples of a dataset.
-#'
+#' @noRd
 .getClassAttributes <- function(dataset){
   lapply(dataset, FUN = function(x) x[length(x)])
 }

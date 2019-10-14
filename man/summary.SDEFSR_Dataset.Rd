@@ -16,7 +16,7 @@ Summary relevant data of a \code{SDEFSR_Dataset} dataset.
 }
 \details{
 This function show important information about the \code{SDEFSR_Dataset} dataset for the user. Note that it does not 
-show all the information available. The rest is only for the algorithms. The values that appear are accesible by the
+show all the information available. The rest is only for the algorithms. The values that appear are accessible by the
 \code{$} operator, e.g. dataset$relation or dataset$examplesPerClass.
 }
 \examples{
@@ -24,4 +24,3 @@ show all the information available. The rest is only for the algorithms. The val
 summary(carTra) 
 
 }
-

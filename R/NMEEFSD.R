@@ -383,7 +383,7 @@
 #' @param output character vector with the paths of where store information file, rules file and test quality measures file, respectively.
 #' @param seed An integer to set the seed used for generate random numbers.
 #' @param nLabels Number of linguistic labels for numerical variables.
-#' @param nEval An integer for set the maximum number of evaluations in the evolutive process.
+#' @param nEval An integer for set the maximum number of evaluations in the evolutionary process.
 #' @param popLength An integer to set the number of individuals in the population.
 #' @param crossProb Sets the crossover probability. A number in [0,1].
 #' @param mutProb Sets the mutation probability. A number in [0,1].
@@ -392,7 +392,7 @@
 #' @param Obj3 Sets the Objective number 3. See \code{Objective values} for more information about the possible values.
 #' @param minCnf Sets the minimum confidence that must have a rule in the Pareto front for being returned. A number in [0,1].
 #' @param reInitCoverage Sets if the algorithm must perform the reinitialitation based on coverage when it is needed. A string with "yes" or "no".
-#' @param porcCob Sets the maximum percentage of variables that participate in the rules genereted in the reinitialitation based on coverage. A number in [0,1]
+#' @param porcCob Sets the maximum percentage of variables that participate in the rules generated in the reinitialitation based on coverage. A number in [0,1]
 #' @param StrictDominance Sets if the comparison between individuals must be done by strict dominance or not. A string with "yes" or "no".
 #' @param targetVariable The name or index position of the target variable (or class). It must be a categorical one.
 #' @param targetClass A string specifing the value the target variable. \code{null} for search for all possible values.
@@ -414,9 +414,9 @@
 #'     first makes a selection based on binary tournament and save the individuals in a offspring population.
 #'     Then, NMEEF-SD apply the genetic operators over individuals in offspring population
 #'     
-#'     For generate the population which participate in the next iteration of the evoluationary process
+#'     For generate the population which participate in the next iteration of the evolutionary process
 #'     NMEEF-SD calculate the dominance among all individuals (join main population and offspring) and then, apply the NSGA-II fast sort algorithm to order
-#'     the population by fronts of dominance, the first front is the non-dominanted front (or Pareto), the second is 
+#'     the population by fronts of dominance, the first front is the non-dominated front (or Pareto), the second is 
 #'     where the individuals dominated by one individual are, the thirt front dominated by two and so on.
 #'     
 #'     To promove diversity NMEEF-SD has a mechanism of reinitialization of the population based on coverage
@@ -500,7 +500,7 @@
 #'    NMEEF_SD(paramFile = NULL, 
 #'                training = habermanTra, 
 #'                test = habermanTst, 
-#'                output = c("optionsFile.txt", "rulesFile.txt", "testQM.txt"),
+#'                output = c(NA, NA, NA),
 #'                seed = 0, 
 #'                nLabels = 3,
 #'                nEval = 300, 
@@ -632,7 +632,7 @@ NMEEF_SD <- function(paramFile = NULL,
   test$covered <- logical(test$Ns)
   
   #Remove older result file to overwrite it later.
-  file.remove(parameters$outputData[which(file.exists(parameters$outputData))])
+  #file.remove(parameters$outputData[which(file.exists(parameters$outputData))])
  
   # Set the rule representation for the genetic algorithm
   if(tolower(parameters$RulesRep) == "can"){
@@ -659,7 +659,7 @@ NMEEF_SD <- function(paramFile = NULL,
   
   #----- EXECUTION OF THE ALGORITHM  -------------------
   if(parameters$targetClass != "null"){ # Execution for an only class
-    cat("\n", "\n", "Searching rules for only one value of the target class...", "\n", "\n", file ="", fill = TRUE) 
+    message("\n\nSearching rules for only one value of the target class...\n\n") 
     #Execute the genetic algorithm
     rules <- .findRule(parameters$targetClass, "NMEEFSD", training, parameters, DNF, cate, num, Objectives, as.numeric(parameters[["porcCob"]]), parameters[["StrictDominance"]] == "yes", parameters[["reInitPob"]] == "yes", minCnf)
     
@@ -671,21 +671,26 @@ NMEEF_SD <- function(paramFile = NULL,
       
       #Print the rule in the console and save into the rules file.
       for(i in seq_len(NROW(rules))){
-        cat("GENERATED RULE", i,   file = "", sep = " ",fill = TRUE)
-        cat("GENERATED RULE", i,   file = parameters$outputData[2], sep = " ",fill = TRUE, append = TRUE)
+        message(paste("\nGENERATED RULE", i), appendLF = T)
+        if(! is.na(parameters$outputData[2])){
+          cat("GENERATED RULE", i,   file = parameters$outputData[2], sep = " ",fill = TRUE, append = TRUE)
+        }
         .print.rule(rule = as.numeric( rules[i, - NCOL(rules)] ), max = training$sets, names = training$attributeNames, consecuent = rules[i, NCOL(rules)], types = training$attributeTypes,fuzzySets = training$fuzzySets, categoricalValues = training$categoricalValues, DNF, rulesFile = parameters$outputData[2])
-        cat("\n","\n",  file = "", sep = "",fill = TRUE)
-        cat("\n",  file = parameters$outputData[2], sep = "",fill = TRUE, append = TRUE)
+        
+        if(! is.na(parameters$outputData[2]))
+          cat("\n",  file = parameters$outputData[2], sep = "",fill = TRUE, append = TRUE)
       }
+      
     } else {
-      cat("No rules found with a confidence greater than the specified", file = "", fill = TRUE)
-      cat("No rules found with a confidence greater than the specified\n", file = parameters$outputData[2], append = TRUE)
+      warning("No rules found with a confidence greater than the specified")
+      if(! is.na(parameters$outputData[2]))
+        cat("No rules found with a confidence greater than the specified\n", file = parameters$outputData[2], append = TRUE)
       rules <- numeric()
     }
     
   } else {  #Execution for all classes
     
-    cat("\n", "\n", "Searching rules for all values of the target class...", "\n", "\n", file ="", fill = TRUE)  
+    message("\n\nSearching rules for all values of the target class...\n\n")  
     
     #Launch the genetic algorithm for each class, paralelize the process for a better performance
     if(Sys.info()[1] == "Windows"){
@@ -702,15 +707,17 @@ NMEEF_SD <- function(paramFile = NULL,
       
       #Print Rules in console and in the rules file
       for(i in seq_len(NROW(rules))){
-        cat("GENERATED RULE", i,   file = "", sep = " ",fill = TRUE)
-        cat("GENERATED RULE", i,   file = parameters$outputData[2], sep = " ",fill = TRUE, append = TRUE)
+        message(paste("\nGENERATED RULE", i), appendLF = T)
+        if(! is.na(parameters$outputData[2]))
+          cat("GENERATED RULE", i,   file = parameters$outputData[2], sep = " ",fill = TRUE, append = TRUE)
         .print.rule(rule = as.numeric( rules[i, - NCOL(rules)] ), max = training$sets, names = training$attributeNames, consecuent = rules[i, NCOL(rules)], types = training$attributeTypes,fuzzySets = training$fuzzySets, categoricalValues = training$categoricalValues, DNF, rulesFile = parameters$outputData[2])
-        cat("\n","\n",  file = "", sep = "",fill = TRUE)
-        cat("\n",  file = parameters$outputData[2], sep = "",fill = TRUE, append = TRUE)
+        if(! is.na(parameters$outputData[2]))
+          cat("\n",  file = parameters$outputData[2], sep = "",fill = TRUE, append = TRUE)
       }
     } else {
-      cat("No rules found with a confidence greater than the specified", file = "", fill = TRUE)
-      cat("No rules found with a confidence greater than the specified\n", file = parameters$outputData[2], append = TRUE)
+      warning("No rules found with a confidence greater than the specified")
+      if(! is.na(parameters$outputData[2]))
+        cat("No rules found with a confidence greater than the specified\n", file = parameters$outputData[2], append = TRUE)
       rules <- numeric()
     }
     
@@ -718,7 +725,7 @@ NMEEF_SD <- function(paramFile = NULL,
   
   #---------------------------------------------------
   
-  cat("\n", "\n", "Testing rules...", "\n", "\n", file = "", sep = " ", fill = TRUE)
+  message("\n\nTesting rules...\n\n")
   
   #--------  Rule testing --------------------
   if(length(rules) > 0){
@@ -770,8 +777,8 @@ NMEEF_SD <- function(paramFile = NULL,
   
   
   #Print global quality measure on console
-  cat("Global:", file ="", fill = TRUE)
-  cat(paste("\t - N_rules:", NROW(rules), sep = " "),
+  message("Global:",appendLF = T)
+  message(paste(paste("\t - N_rules:", NROW(rules), sep = " "),
       paste("\t - N_vars:", round(sumNvars / n_rules, 6), sep = " "),
       paste("\t - Coverage:", round(sumCov / n_rules, 6), sep = " "),
       paste("\t - Significance:", round(sumSign / n_rules, 6), sep = " "),
@@ -783,11 +790,12 @@ NMEEF_SD <- function(paramFile = NULL,
       paste("\t - CConfidence:", round(sumCconf / n_rules, 6), sep = " "),
       paste("\t - True Positive Rate:", round(sumTpr / n_rules, 6), sep = " "),
       paste("\t - False Positive Rate:", round(sumFpr / n_rules, 6), sep = " "),
-      file = "", sep = "\n"
+      sep = "\n")
   )
   
 
 #Print global quality measures on the quality measures file  
+  if(! is.na(parameters$outputData[3]))
   cat( "Global:",
        paste("\t - N_rules:", nrow(rules), sep = " "),
        paste("\t - N_vars:", round(sumNvars / n_rules, 6), sep = " "),
@@ -807,8 +815,9 @@ NMEEF_SD <- function(paramFile = NULL,
   class(rulesToReturn) <- "SDEFSR_Rules"
   rulesToReturn # Return
   } else {
-    cat("No rules for testing", file = "", fill = TRUE)
-    cat("No rules for testing", file = parameters$outputData[2], append = TRUE)
+    warning("No rules for testing")
+    if(! is.na(parameters$outputData[2]))
+      cat("No rules for testing", file = parameters$outputData[2], append = TRUE)
     NULL # return
   }
   #---------------------------------------------------

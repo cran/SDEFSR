@@ -1338,7 +1338,7 @@ executionPSD <- function(clas = NULL,   # number of the class to generate rules.
   #best population is now initial population.
   bestPop <- pop
   bestPopulationFitness <- populationFitness
-  cat(paste("Global Fitness obtained in generation [0]:", bestPopulationFitness, "\n", sep = " "))
+  message(paste("Global Fitness obtained in generation [0]:", bestPopulationFitness, "\n", sep = " "))
   
   
   
@@ -1412,7 +1412,7 @@ executionPSD <- function(clas = NULL,   # number of the class to generate rules.
     if(bestPopulationFitness < populationFitness){
       bestPopulationFitness <- populationFitness
       bestPop <- pop
-      cat(paste("Global Fitness obtained in generation [", generation, "]: ", bestPopulationFitness, "\n", sep = ""))
+      message(paste("Global Fitness obtained in generation [", generation, "]: ", bestPopulationFitness, "\n", sep = ""))
     }
     
     #cat("\r", (generation / (maxiter-1)) * 100, "% Completed.", sep = "")
@@ -2297,7 +2297,7 @@ if(DNFRules) {
 #' @param The T-norm to use. 0 to Minimum T-norm, 1 to Product T-norm.
 #'
 #' @return a numeric vector with the belonging degree of every example to the given rule.
-#' 
+#' @noRd
 .fitnessFuGePSD <- function(rule, dataset, noClass, nLabels, maxRule, cate, num, t_norm){
   
   

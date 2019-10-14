@@ -50,13 +50,12 @@ A KEEL data file must have the following structure:
     }
     
 }
-\author{
-Angel M. Garcia <agvico@ujaen.es>
-}
 \references{
 J. Alcala-Fdez, A. Fernandez, J. Luengo, J. Derrac, S. Garcia, L. Sanchez, F. Herrera. KEEL Data-Mining Software Tool: Data Set Repository, Integration of Algorithms and Experimental Analysis Framework. Journal of Multiple-Valued Logic and Soft Computing 17:2-3 (2011) 255-287.
 }
 \seealso{
 KEEL Dataset Repository (Standard Classification): \url{http://sci2s.ugr.es/keel/category.php?cat=clas}
 }
-
+\author{
+Angel M. Garcia <agvico@ujaen.es>
+}

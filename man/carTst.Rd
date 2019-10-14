@@ -23,8 +23,7 @@ Car Evaluation Database was derived from a simple hierarchical decision model.
      persons, lug_boot, safety.
 }
 \examples{
-   carTra$data
-   carTra$atributeNames
+   carTst$data
+   carTst$attributeNames
    
 }
-

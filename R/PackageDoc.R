@@ -25,7 +25,7 @@
 #'   \item{\code{\link{SDIGA}}                  Subgroup Discovery Iterative Genetic Algorithm (SDIGA).}
 #'   \item{\code{\link{SDEFSR_GUI}}}               Launch the Shiny app in your browser.
 #'   \item{\code{\link{FUGEPSD}}                Fuzzy Genetic Programming-based learning for Subgroup Discovery (FuGePSD) Algorithm.}
-#'   \item{\code{\link{plotRules}}              Plot the discovered rules by a SDEFSR algorithm.}
+#'   \item{\code{\link{plot.SDEFSR_Rules}}            Plot the discovered rules by a SDEFSR algorithm.}
 #'   \item{\code{\link{sort.SDEFSR_Rules}}             Sort the discovered rules by a given quality measure.}
 #'   \item{\code{\link{SDEFSR_DatasetFromDataFrame}}   Reads a data.frame and create a \code{SDEFSR_Dataset} object to be execute by an algorithm of this package.}
 #' }

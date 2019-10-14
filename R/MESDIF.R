@@ -296,7 +296,7 @@
 #'  MESDIF( paramFile = NULL,
 #'         training = habermanTra, 
 #'         test = habermanTst, 
-#'         output = c("optionsFile.txt", "rulesFile.txt", "testQM.txt"),
+#'         output = c(NA, NA, NA),
 #'         seed = 0, 
 #'         nLabels = 3,
 #'         nEval = 300, 
@@ -424,7 +424,7 @@ MESDIF <- function(paramFile = NULL,
   test$covered <- logical(test$Ns)
   
     #Remove files
-  file.remove(parameters$outputData[which(file.exists(parameters$outputData))])
+  #file.remove(parameters$outputData[which(file.exists(parameters$outputData))])
  
   # Set the representation of rules (CAN or DNF)
   if(tolower(parameters$RulesRep) == "can"){
@@ -454,7 +454,7 @@ MESDIF <- function(paramFile = NULL,
   
   #----- EXECUTION OF THE ALGORITHM -------------------
   if(parameters$targetClass != "null"){ # Execution for one value of the target class
-    cat("\n", "\n", "Searching rules for only one value of the target class...", "\n", "\n", file ="", fill = TRUE) 
+    message("\n\nSearching rules for only one value of the target class...\n\n") 
     #Execution of the algorithm
     rules <- .findRule(parameters$targetClass, "MESDIF", training, parameters, DNF, cate, num, Objectives)
     if(! DNF) 
@@ -464,7 +464,7 @@ MESDIF <- function(paramFile = NULL,
     
   } else {  #Execution for all classes
     
-    cat("\n", "\n", "Searching rules for all values of the target class...", "\n", "\n", file ="", fill = TRUE)  
+    message("\n\nSearching rules for all values of the target class...\n\n" )
     
     #If we are on Windowns, we cant use mclapply because it use FORK() for parallelism
     if(Sys.info()[1] == "Windows")
@@ -482,12 +482,13 @@ MESDIF <- function(paramFile = NULL,
   }
   #Print rules to the user on console and save into a file
   for(i in seq_len(NROW(rules))){
-    cat("GENERATED RULE", i,   file = "", sep = " ",fill = TRUE)
-    cat("GENERATED RULE", i,   file = parameters$outputData[2], sep = " ",fill = TRUE, append = TRUE)
+    message(paste("\nGENERATED RULE", i,   sep = " "), appendLF = T)
+    if(!is.na(parameters$outputData[2]))
+      cat("GENERATED RULE", i,   file = parameters$outputData[2], sep = " ",fill = TRUE, append = TRUE)
     #Print the rule into a human-readable format
     .print.rule(rule = as.numeric( rules[i, - NCOL(rules)] ), max = training$sets, names = training$attributeNames, consecuent = rules[i, NCOL(rules)], types = training$attributeTypes,fuzzySets = training$fuzzySets, categoricalValues = training$categoricalValues, DNF, rulesFile = parameters$outputData[2])
-    cat("\n","\n",  file = "", sep = "",fill = TRUE)
-    cat("\n",  file = parameters$outputData[2], sep = "",fill = TRUE, append = TRUE)
+    if(!is.na(parameters$outputData[2]))
+     cat("\n",  file = parameters$outputData[2], sep = "",fill = TRUE, append = TRUE)
   }
     
     
@@ -495,7 +496,7 @@ MESDIF <- function(paramFile = NULL,
   
   #---------------------------------------------------
   
-  cat("\n", "\n", "Testing rules...", "\n", "\n", file = "", sep = " ", fill = TRUE)
+  message("\n\nTesting rules...\n\n")
   
   #--------  Rule Testing --------------------
   #
@@ -547,8 +548,8 @@ MESDIF <- function(paramFile = NULL,
   
   
   #Global quality measures as a mean of individual values
-  cat("Global:", file ="", fill = TRUE)
-  cat(paste("\t - N_rules:", NROW(rules), sep = " "),
+  message("Global:", file ="", fill = TRUE)
+  message(paste(paste("\t - N_rules:", NROW(rules), sep = " "),
       paste("\t - N_vars:", round(sumNvars / n_rules, 6), sep = " "),
       paste("\t - Coverage:", round(sumCov / n_rules, 6), sep = " "),
       paste("\t - Significance:", round(sumSign / n_rules, 6), sep = " "),
@@ -560,10 +561,11 @@ MESDIF <- function(paramFile = NULL,
       paste("\t - CConfidence:", round(sumCconf / n_rules, 6), sep = " "),
       paste("\t - True Positive Rate:", round(sumTpr / n_rules, 6), sep = " "),
       paste("\t - False Positive Rate:", round(sumFpr / n_rules, 6), sep = " "),
-      file = "", sep = "\n"
+      sep = "\n")
   )
   
   #Save in testMeasures File the global results
+  if(!is.na(parameters$outputData[3])){
   cat( "Global:",
        paste("\t - N_rules:", nrow(rules), sep = " "),
        paste("\t - N_vars:", round(sumNvars / n_rules, 6), sep = " "),
@@ -579,6 +581,7 @@ MESDIF <- function(paramFile = NULL,
        paste("\t - False Positive Rate:", round(sumFpr / n_rules, 6), sep = " "),
        file = parameters$outputData[3], sep = "\n", append = TRUE
   )
+  }
   
   #---------------------------------------------------
   class(rulesToReturn) <- "SDEFSR_Rules"

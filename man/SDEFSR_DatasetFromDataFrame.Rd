@@ -45,10 +45,9 @@ SDEFSR_DatasetObject <- SDEFSR_DatasetFromDataFrame(df, "random")
 invisible()
 
 }
-\author{
-Angel M Garcia <amgv0009@red.ujaen.es>
-}
 \seealso{
 \code{\link{read.dataset}}
 }
-
+\author{
+Angel M Garcia <amgv0009@red.ujaen.es>
+}

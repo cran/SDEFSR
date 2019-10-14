@@ -29,7 +29,7 @@ functions with recommended default parameters. In addition, it brings a graphica
 
 # Introduction
 
-Subgroup discovery (SD) is a data mining field that aims to describe data using supervised learning techniques. The goal is to find simple, general and interesting patterns with respect to a given variable of interest. Throughout the literature, SD has been applied with success to different real-world problems in areas such as marketing \cite{deljesus2007evolutionary, mesdif}, medicine \cite{carmona2015fuzzy, carmona2013fuzzy, Stiglic2012348, Gamberger200327} and e-learning \cite{Poitras2016204, Lemmerich2011129, carmona2010evolutionary}, amongst others \cite{Atzmueller2016965,  Jin2014SmartElectricity, Rodriguez20131810, OrOlive}.   
+Subgroup discovery (SD) is a data mining field that aims to describe data using supervised learning techniques. The goal is to find simple, general and interesting patterns with respect to a given variable of interest. Throughout the literature, SD has been applied with success to different real-world problems in areas such as marketing \cite{deljesus2007evolutionary, mesdif}, medicine \cite{carmona2015fuzzy, carmona2013fuzzy, Stiglic2012348, Gamberger200327} and e-learning \cite{Poitras2016204, Lemmerich2011129, carmona2010evolutionary}, among others \cite{Atzmueller2016965,  Jin2014SmartElectricity, Rodriguez20131810, OrOlive}.   
 
 SD is a rule learning process within a complex search space. Therefore, the search strategy used becomes a key factor in the efficiency of the method. Different strategies can be found in the literature such as beam search in the algorithm CN2-SD \cite{lavravc2004subgroup} and Apriori-SD \cite{kavvsek2006apriori}, exhaustive algorithms such as SDMap \cite{atzmueller2006sd} or Evolutionary Algorithms (EAs), for example.
 
@@ -37,7 +37,7 @@ EAs are stochastic algorithms for optimizing and searching tasks, based on the n
 
 Nowadays, there are several frameworks that allow the realization of data mining tasks, but only a few of them have implementations of SD algorithms. The most well-know frameworks with SD algorithms are KEEL \cite{keelDatasets} and VIKAMINE \cite{atzmueller2012vikamine}, but ORANGE \cite{demvsar2013orange}, and CORTANA \cite{meeng2011flexible} provide some implementations too. In fact, VIKAMINE also provides an R package called **rsubgroup** \cite{rsubgroup} which is an interface for R to VIKAMINE Java algorithms.  
 
-In this contribution the **SDEFSR** package is introduced. It provides the user with the most important evolutionary fuzzy rule-based methods for SD documented in the literature, being a major contribution to the R community. In addition, it also brings the capability of reading datasets in the KEEL data format. This file format is not natively supported by R. Similarly, this package provides a Graphical User Interface (GUI) to make this task easier for the user, especially the unexperienced one.
+In this contribution the **SDEFSR** package is introduced. It provides the user with the most important evolutionary fuzzy rule-based methods for SD documented in the literature, being a major contribution to the R community. In addition, it also brings the capability of reading datasets in the KEEL data format. This file format is not supported by R. Similarly, this package provides a Graphical User Interface (GUI) to make this task easier for the user, especially the novel one.
 
 This contribution is organized according to the following structure: The first section presents SD concepts, main properties and features. In the second section, the structure of the SDEFSR package and its operations are described. In the third section, a complete example of use of the package is presented. Finally, the GUI of SDEFSR is shown.
 
@@ -111,7 +111,7 @@ Quality measures that accomplish this criteria available in the **SDEFSR** packa
 			\begin{equation} 
 			Sup(R)= \frac{n(Cond \wedge  Target_{value})}{n_s} \label{support}
 			\end{equation}
-			where $n(Cond \wedge  Target_{value})$ means the number of examples that satisfy the antecedent and consecuent part of the rule and $n_s$ is the number of examples in the dataset. 
+			where $n(Cond \wedge  Target_{value})$ means the number of examples that satisfy the antecedent and consequent part of the rule and $n_s$ is the number of examples in the dataset. 
 			
 			\item \emph{Coverage:} It measures the percentage of examples covered by the rule related to the total number of examples: 
 			\begin{equation}
@@ -164,7 +164,7 @@ A more extended classification and definition of quality measures for SD is avai
 
 
 ## Evolutionary fuzzy systems
-Evolutionary fuzzy systems (EFS) are the union of two powerfull tools for aproximate reasoning: evolutionary algorithms and fuzzy logic.
+Evolutionary fuzzy systems (EFS) are the union of two powerful tools for approximate reasoning: evolutionary algorithms and fuzzy logic.
 
 In one side, evolutionary algorithms \cite{eiben2003introduction} are stochastic algorithms based on the natural evolution to solve complex optimization problems. It is based on a population of representations of possible solutions, called chromosomes. A basic evolutionary algorithm scheme is:
 
@@ -177,15 +177,15 @@ In one side, evolutionary algorithms \cite{eiben2003introduction} are stochastic
 			\item Crossover operator. Which takes two chromosomes and generates two descendants as a combination of the elements of the parents.
 			\item Mutation operator. Which takes a chromosome and changes randomly a gene (a value of the possible solution).
 		\end{itemize}
-	\item Replace the population with the new generated chromomes.
+	\item Replace the population with the new generated chromosomes.
 	\item Go to step 2 until a stopping criteria is reached. Normally this criteria is a number of evaluations or generations.
 \end{enumerate}
 
 These algorithms performs a global stochastic search through a huge search space efficiently. However, it is possible that these algorithms can not find an optimal solution (global optimum), but a good one (a local optimum) that can solve the problem too. Theys are well suited for SD because the problem of finding subgroups can be formulated from the optimization point of view coding rules as a parameters structure that optimize some measures. Additionally, different kinds of rules exists in SD (with inequality, with intervals, fuzzy rules...). This can change dramatically the size of the search space and genetic algorithms can adapt these structures easily without performance degradation. Likewise, the selection of the genetic operators can make GA a great candidate to introduce expert knowledge \cite{Carmona2014overview}.
 
-On the other side, fuzzy logic \cite{zadeh1975concept} is an extension of the traditional set theory. Its main objective is to modelate and deal with imprecise knowledge, which is nearer to the human reasoning. The main difference with traditional set theory is that belonging degree is not zero or one, but a real value in [0,1]. This possibility allows to define fuzzy limits and the chance of overlapping between fuzzy sets. 
+On the other side, fuzzy logic \cite{zadeh1975concept} is an extension of the traditional set theory. Its main objective is to model and deal with imprecise knowledge, which is nearer to the human reasoning. The main difference with traditional set theory is that belonging degree is not zero or one, but a real value in [0,1]. This possibility allows to define fuzzy limits and the chance of overlapping between fuzzy sets. 
 
-A fuzzy variable is a set of lingüistic labels, e.g. low, medium and high, which are defined by overlapped fuzzy sets. This information is nearer to human reasoning and it is possible to calculate with precission the value of each belonging degree. This expressivity allow to obtain simpler rules because continuous variables are more understandable for humans. A rule can be a set of fuzzy variables. To determine if the rule cover an example it is neccesary to calculate the belonging degree of each variable in the rule with respect to the example. If all variables has a belonging degree grater than zero, the example is covered.
+A fuzzy variable is a set of linguistic labels, e.g. low, medium and high, which are defined by overlapped fuzzy sets. This information is nearer to human reasoning and it is possible to calculate with precision the value of each belonging degree. This expressivity allow to obtain simpler rules because continuous variables are more understandable for humans. A rule can be a set of fuzzy variables. To determine if the rule cover an example it is neccessary to calculate the belonging degree of each variable in the rule with respect to the example. If all variables has a belonging degree grater than zero, the example is covered.
 
 
 Evolutionary fuzzy systems is the union of both techniques, and has three ways of work \cite{herrera2008genetic}: 
@@ -206,14 +206,14 @@ Now, we describe the algorithms that are available in our package. This contains
 
 ### SDIGA (Subgroup Discovery Iterative Genetic Algorithm)
 
-The algorithm SDIGA is a subgroup discovery algorithm that extract rules with two possible representations: one with conjunctions of attribute-value pairs (called canonical representation) or one with a disyuntive normal form (DNF) in the antecedent. It follows an iterative schema with a genetic algorithm in his core to extract those rules, this genetic algorithm only extract one rule, the best of the population, and after the extraction a local optimization could be performed in order to improve the generality of the rule. As the algorithm follows an iterative schema, the genetic algorithm is executed one time after another until a stopping criteria is reached: the rule obteined by the genetic algorithm and after the local improvement phase must cover at least one example not covered by precedent rules and this rule must have a minimum confidence (see Equation \ref{confidence}).  
+The algorithm SDIGA is a subgroup discovery algorithm that extract rules with two possible representations: one with conjunctions of attribute-value pairs (called canonical representation) or one with a disjunctive normal form (DNF) in the antecedent. It follows an iterative schema with a genetic algorithm in his core to extract those rules, this genetic algorithm only extract one rule, the best of the population, and after the extraction a local optimization could be performed in order to improve the generality of the rule. As the algorithm follows an iterative schema, the genetic algorithm is executed one time after another until a stopping criteria is reached: the rule obtained by the genetic algorithm and after the local improvement phase must cover at least one example not covered by precedent rules and this rule must have a minimum confidence (see Equation \ref{confidence}).  
 SDIGA can work with lost data (represented by  the maximum value of the variable + 1), categorical variables and numerical ones using fuzzy logic with the latter to improve the interpretability of the results.
 
 #### Components of genetic algorithm of SDIGA
 As we mentioned above, a genetic algorithm is the core of SDIGA. Such genetic algorithm is the responsible of extract one rule per execution and this rule it is the best of the population at the final of the evolutive process.
 
 ##### Representation schema  \label{esquemas}
-Each chromosome in the population represents a possible rule but it only represents the antecedent part of the rule because the consecuent is prefixed. SDIGA can handle two types of representation as we mentioned above, canonical and DNF.  
+Each chromosome in the population represents a possible rule but it only represents the antecedent part of the rule because the consequent is prefixed. SDIGA can handle two types of representation as we mentioned above, canonical and DNF.  
 Canonical representation is formed by a numerical vector of a fixed length equal to the number of variables with possibles values in a range in $[0, max]$ where $max$ is the number of possible values for categorical variables or the number of fuzzy sets defined for numerical variables. This $max$ value represents the no participation of that variable in the rule.  
 DNF representation is formed by a binary vector, also with fixed length equal to the sum of all number of values/fuzzy sets of the variables. Here, a variable does not participate in a rule when all of his values are equal to zero or one.
 
@@ -228,7 +228,7 @@ Mutation operator is applied over all the population of parents and  chromosomes
 \end{itemize}
 
 ##### Fitness function 
-The function to define the quality of a chromose in SDIGA is a weighted average of three of the quality measures described in section \ref{medidas}. So the functions to maximize is: \begin{equation} f(x) = \frac{Sop(x) \cdot  w_1 + Conf(x) \cdot w_2 + Obj3(x) \cdot  w_3}{\sum_{i=1}^{3} w_i} \label{fitnessSDIGA} \end{equation}  
+The function to define the quality of a chromosome in SDIGA is a weighted average of three of the quality measures described in section \ref{medidas}. So the functions to maximize is: \begin{equation} f(x) = \frac{Sop(x) \cdot  w_1 + Conf(x) \cdot w_2 + Obj3(x) \cdot  w_3}{\sum_{i=1}^{3} w_i} \label{fitnessSDIGA} \end{equation}  
 where:
 \begin{itemize}
  \item $Sop(x)$ is the local support. This support is a modification of support (see Equation \ref{support}) and can be crisp or fuzzy: 
@@ -238,13 +238,13 @@ where:
       where $Ne^+(R_i)$ is the number of examples covered by the rule and it is not covered by previous rules. $Ne_{NC}$ is the number of examples of the target variable that it is not covered by any rule yet and $APC$ is the \textit{Antecedent Part Compatibility} equation calculted only with new covered examples (see Equation \ref{APC}).
     \end{itemize}
     
-    \item $Conf(x)$ is the confidence defined as in Equation \ref{confidence} for the crisp case, but for fuzzy case is defined as the ratio of the sum of $APC$ expresion of the correctly covered examples and the sum of $APC$ all examples covered by the rule: \begin{equation} Conf_d(x) = \frac{\sum_{E^{CC}} APC(E^k, R_i)}{\sum_{E^{C}} APC(E^k, R_i)} \end{equation} where $E^{CC}$ are the correctly covered examples and $E^C$ are the covered examples.
+    \item $Conf(x)$ is the confidence defined as in Equation \ref{confidence} for the crisp case, but for fuzzy case is defined as the ratio of the sum of $APC$ expression of the correctly covered examples and the sum of $APC$ all examples covered by the rule: \begin{equation} Conf_d(x) = \frac{\sum_{E^{CC}} APC(E^k, R_i)}{\sum_{E^{C}} APC(E^k, R_i)} \end{equation} where $E^{CC}$ are the correctly covered examples and $E^C$ are the covered examples.
     
     \item $Obj3(x)$ is other quality measure of section \ref{medidas}
     \item $w_i$ is the weight of objective \textit{i}
 \end{itemize}
 
-As this rules uses fuzzy logic, we need an expresion to determine when an example is covered or not by a rule and also determine the belonging degree of that example to the rule. This function is determined by the expression $APC$ (_Antecedent Part Compatibility_) and it is calculate by the expresssion: \begin{equation} APC(e, R_i) = T(TC(\mu _{1}^{1}(e_1), ... , \mu _{n}^{1}(e_i)), ... , TC(\mu _{1}^{i}(e_1), ... , \mu _{n}^{i}(e_i))) \label{APC} \end{equation} where:  
+As this rules uses fuzzy logic, we need an expresion to determine when an example is covered or not by a rule and also determine the belonging degree of that example to the rule. This function is determined by the expression $APC$ (_Antecedent Part Compatibility_) and it is calculate by the expression: \begin{equation} APC(e, R_i) = T(TC(\mu _{1}^{1}(e_1), ... , \mu _{n}^{1}(e_i)), ... , TC(\mu _{1}^{i}(e_1), ... , \mu _{n}^{i}(e_i))) \label{APC} \end{equation} where:  
 
 \begin{itemize}
   \item $e_i$ is the value of the example for the variable \textit{i}
@@ -253,7 +253,7 @@ As this rules uses fuzzy logic, we need an expresion to determine when an exampl
   \item $T$ is the fuzzy t-norm. In this case is the minimum t-norm.
 \end{itemize}
 
-$\mu_{n}^{i}$ will be one or zero if the variable is categorical and its value is the same of the rule or not. In case of numerical variable, $\mu_{n}^{i}$ will be calculated following the triangular belonging degree function.
+$\mu_{n}^{i}$ will be one or zero if the variable is categorical and its value is the same of the rule or not. In case of numerical variable, $\mu_{n}^{i}$ will be computed following the triangular belonging degree function.
 \begin{equation} 
 \mu_{a,b,c} = \left\{\begin{matrix}
 0 & x \leq a\\ 
@@ -288,7 +288,7 @@ Now we describe briefly the components of the genetic algorithm to show how it w
 
 
 ##### Initial Population generation \label{biasedInit}
-The initial population operator performed by MESDIF produce random chromosomes in two ways: one percentage of chromosomes are produced ramdomly and the rest are produced also randomly, but with the difference that only a maximum number of variables could participate in the rule. This produce more generality in the generated rules.
+The initial population operator performed by MESDIF produce random chromosomes in two ways: one percentage of chromosomes are produced randomly and the rest are produced also randomly, but with the difference that only a maximum number of variables could participate in the rule. This produce more generality in the generated rules.
 
 ##### Fitness function
 
@@ -320,7 +320,7 @@ The genetic operators of MESDIF are:
 
 
 ### NMEEF-SD (Non-dominated Multi-objective Evolutionary algorithm for Extracting Fuzzy rules in Subgroup Discovery)
-NMEEF-SD is another multi-objectve genetic algorithm based in the NSGA-II \cite{nsga} approach. This algorithm has a fast sorting algorithm and a reinitialisation based on coverage if the population does not evolve for a period.  
+NMEEF-SD is another multi-objective genetic algorithm based in the NSGA-II \cite{nsga} approach. This algorithm has a fast sorting algorithm and a reinitialisation based on coverage if the population does not evolve for a period.  
 This algorithm only works with a canonical representation (see Section \ref{esquemas}). In \cite{estudioNMEEF} a study is presented where it reflects the low quality of rules obtained with a DNF representation.
 
 #### Evolutionary process
@@ -328,7 +328,7 @@ The evolutionary process follows this steps
 \begin{itemize}
   \item An initial biased population $P_t$ is generated (see Section \ref{biasedInit}).
   \item The genetic operators are applied over $P_t$ obtaining $Q_t$ with the same size as $P_t$.
-  \item $P_t$ and $Q_t$ are joined obtaining $R_t$ and the fast sorting algorithm is applied over $R_t$. The individuals are sorted forming different fronts in the following way: "The first front ($F_1$) is composed of non-dominated individuals, the second front ($F_2$) is composed by individuales dominated by one individual; the third front ($F_3$) is composed by individuals dominated by two, and so on."
+  \item $P_t$ and $Q_t$ are joined obtaining $R_t$ and the fast sorting algorithm is applied over $R_t$. The individuals are sorted forming different fronts in the following way: "The first front ($F_1$) is composed of non-dominated individuals, the second front ($F_2$) is composed by individuals dominated by one individual; the third front ($F_3$) is composed by individuals dominated by two, and so on."
   \item After that, the algorithm generates the population of the next generation ($P_{t+1}$). First, the algorithm checks if the Pareto front covers new examples as it can be show in Figure \ref{procesoNMEEF}. If this condition is not satisfied during a period of the evolutionary process, a reinitialisation based on coverage is performed. Otherwise, the algorithm gets the next population ($P_{t+1}$) introducing, in order, the first complete fronts of $R_t$. If the last front does not fit completely in $P_{t+1}$ then, the front is sorted by the \textit{crowding distance} and first individuals are copied until $P_{t+1}$ is filled.
   \item At the final of the evolutionary process the individuals in the Pareto front are returned.
 \end{itemize}
@@ -354,23 +354,23 @@ The evolutionary process of FuGePSD works as follow:
 
 \begin{enumerate}
   \item Create a random population of a fixed length.
-  \item Create a new population called Offspring Propulation, which is generated via genetic operators.
+  \item Create a new population called Offspring Population, which is generated via genetic operators.
   \item Join original population and offspring and execute the token competition procedure
-  \item Get global fitnees and replace best population if necessary.
+  \item Get global fitness and replace best population if necessary.
   \item return to 2 until number of generations is reached.
   \item Apply to the best population a Screening function and return the resulting rules.
 \end{enumerate}
 
 
-The key function on this scheme is the token competition procedure, which promove diversity on the population, and some of the genetic operator will bring specifity to the rules.
+The key function on this scheme is the token competition procedure, which promove diversity on the population, and some of the genetic operator will bring specificity to the rules.
 
 #### Genetic operators
 
 The genetic operators used by FuGePSD are:
 \begin{itemize}
   \item Crossover: it takes to parents and to random subtrees of each one. The crossover will cross the subtrees if the grammar are correct.
-  \item Mutation: Change randomly a variable of an indiviual with a random value.
-  \item Insertion: Inserts a new node on an indivudual, This node is a variable with a random value.
+  \item Mutation: Change randomly a variable of an individual with a random value.
+  \item Insertion: Inserts a new node on an individual, This node is a variable with a random value.
   \item Dropping: Remove a subtree of an individual.
 \end{itemize}
 
@@ -378,7 +378,7 @@ This genetics operators will be applied with a probability given by the user.
 
 #### Token Competition procedure
 
-The token competition is the key procedure of FuGePSD, this brings diversity on the population keeping the best individuals. The algorithm works as follows: let a token be an example of the datasets, each individual can catch a token if the rule can cover it. If its occur, a flag is setted at that token and this token cannot be catchet by other rules.
+The token competition is the key procedure of FuGePSD, this brings diversity on the population keeping the best individuals. The algorithm works as follows: let a token be an example of the datasets, each individual can catch a token if the rule can cover it. If its occur, a flag is set at that token and this token cannot be catched by other rules.
 
 So, the token competition works as follows:
 
@@ -386,7 +386,7 @@ So, the token competition works as follows:
   \item Sort the population in descending order by their individual fitness value.
   \item In order, each individual takes as much token as it can. This action is storied in a value for each individual called penalized fitness:
   \begin{equation}
-  PenalizedFitness(R_i) = nusualness(R_i) * \frac{count(R_i)}{ideal(R_i)}
+  PenalizedFitness(R_i) = unusualness(R_i) * \frac{count(R_i)}{ideal(R_i)}
   \end{equation}
   Where $count(R_i)$ is the number of tokens the rule really seized and $ideal(R_i)$ is the maximum number of tokens the rule can seize.
   \item Remove individuals with $PenalizedFitness = 0$.
@@ -397,7 +397,7 @@ At the end of the evolutive process, the screening function is launched to get t
 
 
 ## Package architecture
-The main advantage of the **SDEFSR** package is that it provides all evolutionary fuzzy systems for SD that exists in the bibliography. Algorithms included are an important kind of SD methods that are not availble in R at the moment. Therefore, this package provides to the R community a brand new possibility for data mining and data analysis.
+The main advantage of the **SDEFSR** package is that it provides all evolutionary fuzzy systems for SD that exists in the bibliography. Algorithms included are an important kind of SD methods that are not available in R at the moment. Therefore, this package provides to the R community a brand new possibility for data mining and data analysis.
 
 The base of the package is defined by two S3 classes. This classes are:
 \begin{itemize}
@@ -405,8 +405,8 @@ The base of the package is defined by two S3 classes. This classes are:
 	\begin{itemize}
 		\item \emph{relation}. Defines the name of the relation that this dataset belongs to, e.g. "german credit". 
 		\item \emph{attributeNames}. Store the names of the attributes.
-		\item \emph{attributeTypes}. A character that defines the data type of the attribute, i.e. 'r' for real values, 'e' for integers and 'c' for categoricals variables.
-		 \item \emph{min}. A vector with the minimum value for numerical variabes, for categorical variables, this value is zero.
+		\item \emph{attributeTypes}. A character that defines the data type of the attribute, i.e. 'r' for real values, 'e' for integers and 'c' for categorical variables.
+		 \item \emph{min}. A vector with the minimum value for numerical variables, for categorical variables, this value is zero.
 		 \item \emph{max}. A vector with the maximum value for numerical variables or the number of different categorical values that has a categorical variable.
 		 \item \emph{nVars}. The number of variables in the dataset (excluding the target class).
 		 \item \emph{data}. A list that contains each example of the dataset. The categorical variables in data are codified. This means that a categorical value is represented as a value in [0, max -1] that represents the position of the value. For example, in the \emph{german-credit} dataset, the variable \emph{ForeignWorker} has two values: "A201" and "A202", these values are represented in the \emph{data} field of an \emph{SDEFSR\_Dataset} class as 0 or 1, respectively.
@@ -415,7 +415,7 @@ The base of the package is defined by two S3 classes. This classes are:
 		 \item \emph{lostData}. A logical that indicate the presence of lost data.
 		 \item \emph{covered}. A logical vector with length the number of examples that indicates which examples ar covered by the generated rules. This value by default is \emph{NA}, but it is used in some algorithms like SDIGA.
 		 \item \emph{fuzzySets}. A list that indicates the fuzzy sets definitions for each variable. This value is \emph{NA} by default and it is filled for each algorithm.
-		 \item \emph{crispSets}. A list that indicates the crisp sets obtained from the fuzzy sets. As this value is infered from \emph{fuzzySets}, this is NA too.
+		 \item \emph{crispSets}. A list that indicates the crisp sets obtained from the fuzzy sets. As this value is inferred from \emph{fuzzySets}, this is NA too.
 		 \item \emph{sets}. A vector that defines the number of fuzzy sets that each variable has or the number of categorical values.
 		 \item \emph{categoricalValues}. A list that contains a vector of names of each categorical variable or \emph{NA} if the variable is numerical.
 		 \item \emph{Ns}. The number of examples in the dataset.
@@ -429,7 +429,7 @@ The base of the package is defined by two S3 classes. This classes are:
 		 	\item \emph{qualityMeasures}. A list that contains the quality measures of the rule. Such measures are the same as described in the quality measures section.
 		 \end{itemize}
 		 
-		 This object must be returned for all the SD algorithms of this package, and it is neccesary to make an analysis of the generated rules. This object is necessary to the exported functions \emph{plotRules()} that plots an FPR vs TPR graph that allows the visualization of rules, and \emph{orderRules()} that return other \emph{SDEFSR\_Rules} object with the rules sorted by a given quality measure in descendant order. Likewise, this object overloads the subset operator (\emph{'['}) to allow filtering operations easily.
+		 This object must be returned for all the SD algorithms of this package, and it is neccessary to make an analysis of the generated rules. This object is necessary to the exported functions \emph{plot()} that plots an FPR vs TPR graph that allows the visualization of rules, and \emph{orderRules()} that return other \emph{SDEFSR\_Rules} object with the rules sorted by a given quality measure in descendant order. Likewise, this object overloads the subset operator (\emph{'['}) to allow filtering operations easily.
  \end{itemize}
  
 Additionally, the package has a general function that reads datasets in ARFF, KEEL or CSV format called \emph{read.dataset()} and \emph{SDEFSR\_DatasetFromDataFrame()} to transform a \emph{data.frame} into a \emph{SDEFSR\_Dataset}. 
@@ -447,12 +447,12 @@ Also, the develop version is available into GitHub at http://github.com/aklxao2/
 ```{r,eval=FALSE}
 devtools::install_github('aklxao2/SDEFSR')
 ```
-**SDEFSR** depends only on the package **shiny** \cite{shiny}. This package is neccesary to use the user interface in a local way and if the package is not installed, it asked to the user to be install when running the function `SDEFSRR_GUI()`. 
+**SDEFSR** depends only on the package **shiny** \cite{shiny}. This package is neccessary to use the user interface in a local way and if the package is not installed, it asked to the user to be install when running the function `SDEFSRR_GUI()`. 
 Once installed the package has to be loaded before use it. The package can be loaded through `library()` or `require()`. After loading the package there are six datasets available as *SDEFSR_Dataset*: `carTra`, `carTst`, `germanTra`, `germanTst`, `habermanTra` and `habermanTst` that corresponds to `car`, `german` and `haberman` training and test datasets.  Also, rules generated by the SDIGA algorithm with defaults parameters over the `haberman` dataset are loaded as `habermanRules` as an *SDEFSR_Rules* object.  
 
 
 ## Loading a dataset
-In order to use SD algorithms available in the **SDEFSR** package, a `SDEFSR_Dataset` object is neccesary. This object can be generated using the *read.dataset()* function. This function reads ".dat" files with the KEEL data mining tool format, ARFF files (".arff") from WEKA or even CSV files (".csv").
+In order to use SD algorithms available in the **SDEFSR** package, a `SDEFSR_Dataset` object is neccessary. This object can be generated using the *read.dataset()* function. This function reads ".dat" files with the KEEL data mining tool format, ARFF files (".arff") from WEKA or even CSV files (".csv").
 Assuming the files `iris.dat`, `iris.arff` and `iris.csv` corresponding to the
 classical iris dataset in KEEL, ARFF and CSV formats respectively in the working directory, the loading of these files will be as follows: 
 ```{r,eval=FALSE}
@@ -492,7 +492,7 @@ irisFromDataFrame$attributeNames
 Also, it is possible to print the dataset as a `data.frame` with the `print()` function.
 
 ## Executing Subgroup Discovery algorithms
-Once our datasets are ready to be used, it is time to execute one subgroup discovery algorithm. For example we want to execute the algorithm MESDIF. For the rest of the algorithm this steps are equal and only a few parameters are diferent, if you need help with the parameters, refer to the help of the function using `help(function)` or `?function`.  
+Once our datasets are ready to be used, it is time to execute one subgroup discovery algorithm. For example we want to execute the algorithm MESDIF. For the rest of the algorithm this steps are equal and only a few parameters are different, if you need help with the parameters, refer to the help of the function using `help(function)` or `?function`.  
 It is possible to execute an SD algorithm in two ways: Through a parameters file, specifying as argument the path to such file. Or by entering all the parameter names and values at the command line. You can find the structure of the parameters file, among other useful information, on the help pages of each function.
 
 Assuming the `SDEFSR_Dataset` object `irisFromDataFrame` that has been loaded before, and that the `params.txt` parameters file is stored in the working directory, the easiest way to run the `MESDIF()` algorithm, for example, will be:
@@ -532,11 +532,11 @@ As this output could be extremely large, the function also saves it to three fil
 
 ## Analyzing the rules obtained
 
-After the execution of a SD algorithm, it returns a `SDEFSR_Rules` object that contains the rules obtained. Following the example, with the `ruleSet` object obtained we can plot a TPR vs FPR plot to view the reliability, and generality of the rule. Reliable rules has low values of FPR and great TPR values, and too much general variables has great values of both TPR and FPR. To plot the rules, we can use the function `plotRules()`:
+After the execution of a SD algorithm, it returns a `SDEFSR_Rules` object that contains the rules obtained. Following the example, with the `ruleSet` object obtained we can plot a TPR vs FPR plot to view the reliability, and generality of the rule. Reliable rules has low values of FPR and great TPR values, and too much general variables has great values of both TPR and FPR. To plot the rules, we can use the function `plot()`:
 
 ```{r,highlight=FALSE}
 library(ggplot2)
-plotRules(ruleSet)
+plot(ruleSet)
 ```
 Additionally, we can directly order the rule set by a quality measure with the function `orderRules` which returns another `SDEFSR_Rules` object with the sorted rules. By default, the ordering is done by confidence. 
 ```{r,eval=FALSE}
@@ -581,8 +581,8 @@ Once we select the dataset, automatically it shows a graph with information abou
 When loaded a dataset we can do a lot of things, in Figure \ref{pantalla2} we can see all the possibilities we can do:
 \begin{enumerate}
 \item As we mentioned above, we can load a second dataset as a test (or training) file.
-\item This lists have a double function. In one hand we could select the variable to visualize in the graph and in the other hand is to select the target variable for executing a subgroup discovery algorithm. Below the variable selection we can choose a target value of the variable to find subgroups about this value or search for all posible values of the target variable.
-\item Here we can choose how the information will be visualized, for categorical variables we can choose show the information as a pie chart or as a historgram. For numerical variables, a histogram and a bloxpot are available.
+\item This lists have a double function. In one hand we could select the variable to visualize in the graph and in the other hand is to select the target variable for executing a subgroup discovery algorithm. Below the variable selection we can choose a target value of the variable to find subgroups about this value or search for all possible values of the target variable.
+\item Here we can choose how the information will be visualized, for categorical variables we can choose show the information as a pie chart or as a histogram. For numerical variables, a histogram and a boxplot are available.
 \item Here we can choose the subgroup discovery algorithm  and his parameters, that it is shown below. Below the parameters, we have the button to execute the subgroup discovery algorithm.
 \item This section allows the selection, for categorical variables, the values of that variable has that we can see in the graph. It is important to remark that it only "hide" the values in the graph, so it does not eliminate any example of the dataset.
 \item It allows to visualize information about the training or test file.
@@ -604,8 +604,8 @@ The tab `'Test Quality Measures'` shows a table with quality measures of every r
 
 # Summary
 
-In this paper the **SDEFSR** package has been introduced. This package can use four subgroup discovery algorithms without any other dependencies to others tools/packages. Also, the posibility of read and load datasets in the KEEL dataset format is provided, but it can read dataset from ARFF format or load a data.frame object. Finally, a web-based interface is developed for make the work easier, even if we do not have R installed in our system.  
-The devolpment of the package will continue in the future, including more functionality to work with KEEL datasets, adding new subgroup discovery algorithms and also improve the web interface. As we can see we have a great job ahead, so we encourage other developers to participe adding tools or algorithms into the package, as we will do in futures releases.
+In this paper the **SDEFSR** package has been introduced. This package can use four subgroup discovery algorithms without any other dependencies to others tools/packages. Also, the possibility of read and load datasets in the KEEL dataset format is provided, but it can read dataset from ARFF format or load a data.frame object. Finally, a web-based interface is developed for make the work easier, even if we do not have R installed in our system.  
+The development of the package will continue in the future, including more functionality to work with KEEL datasets, adding new subgroup discovery algorithms and also improve the web interface. As we can see we have a great job ahead, so we encourage other developers to participate adding tools or algorithms into the package, as we will do in futures releases.
 
 
 
@@ -781,7 +781,7 @@ D.~Gamberger and N.~Lavrac.
   2002.
 
 \bibitem[Gamberger et~al.(2003)]{Gamberger200327}
-D.~Gamberger, N.~Lavrač, and G.~Krstačić.
+D.~Gamberger, N.~Lavra\v{c}, and G.~Krsta\v{c}i\'{c}.
 \newblock Active subgroup mining: A case study in coronary heart disease risk
   group detection.
 \newblock \emph{Artificial Intelligence in Medicine}, 28\penalty0 (1):\penalty0
@@ -870,7 +870,7 @@ F.~Lemmerich, M.~Ifland, and F.~Puppe.
 K.~S. Leung, Y.~Leung, L.~So, and K.~F. Yam.
 \newblock Rule learning in expert systems using genetic algorithm: 1, concepts.
 \newblock In \emph{Proceedings of the 2nd International Conference on Fuzzy
-  Logic and Neural Networks (IIZUKA’92)}, volume~1, pages 201--204, 1992.
+  Logic and Neural Networks (IIZUKA 92)}, volume~1, pages 201--204, 1992.
 
 \bibitem[{Lowerre}(1976)]{beamSearch}
 B.~T. {Lowerre}.
