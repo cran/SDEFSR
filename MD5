@@ -1,4 +1,4 @@
-90f095ffc621e754c9ce7dd49de9eddf *DESCRIPTION
+6117dd8e4bdce7f299351f749950fa20 *DESCRIPTION
 4506a06263978edfeaff487c153913b6 *NAMESPACE
 60efcdc7e0f6b323218f484f78bb8cfb *NEWS.md
 962d3e30d2d5d6f1bd5f3f17a1463b78 *R/FuGePSD.R
@@ -16,7 +16,7 @@ f3b3ca6967924b4008d63714092ab919 *R/Utils.R
 4c7c4bdf94f8d73623f594457c814e95 *R/read_arff.R
 28f79ca2859d2d9fea5d377717281a42 *R/www/busy.gif
 059ced2b15077d805f2c29c631ffa90a *R/www/load.js
-885783f644b8adb4ef1cb561b3914d98 *build/vignette.rds
+1afb7b4acbc3fcd5dfd111eb230b86b5 *build/vignette.rds
 021927c9fb991eeccfbaa7cc5240769a *data/carTra.rda
 57093e7b04b98c8f6eb7b8f32b1fe38c *data/carTst.rda
 77468d9b09d936a078d5f896b0964004 *data/germanTra.rda
@@ -25,8 +25,8 @@ f31a8fe27ef9cb75d09d519d6b8a1555 *data/habermanRules.rda
 554a5c96db3b1c064a9b32a8dcf18ef0 *data/habermanTra.rda
 ee3f2cb62e17a34baad6dd8790913b15 *data/habermanTst.rda
 4da0194f0eb653b0ce928488ad2ecd8f *inst/doc/SDEFSRpackage.R
-3ef6294835e839b341b7a50016539c5e *inst/doc/SDEFSRpackage.Rmd
-5d03d1be3d9d3143c9dea1172fb75fc5 *inst/doc/SDEFSRpackage.pdf
+37f04c45ff7d61df2c7f8639247f6a9a *inst/doc/SDEFSRpackage.Rmd
+6c976b5ea39af76f43ce9fbb518a0481 *inst/doc/SDEFSRpackage.pdf
 7abedb7ea2cb77188faabdb7477798e1 *inst/shiny/server.R
 ba4fa15991f0514f0b412871abf19e7d *inst/shiny/ui.R
 eacf2a487d3491b02e1b7846f1c76d0f *inst/shiny/www/bootstrap.css
@@ -59,7 +59,7 @@ ee2e18e563a20cd37fa2d12110097e86 *vignettes/Interfaz1.PNG
 9ed4bb72e50853728f4dfa38f8b1cf4d *vignettes/Interfaz2.PNG
 10a355cb0323e7073cc6568e3231d4b4 *vignettes/MESDIFSchema.PNG
 7d5054d2f3a5d62ed219d09baf600307 *vignettes/NMEEFSchema.PNG
-3ef6294835e839b341b7a50016539c5e *vignettes/SDEFSRpackage.Rmd
+37f04c45ff7d61df2c7f8639247f6a9a *vignettes/SDEFSRpackage.Rmd
 59857d060df15d52b6b080b58693d7bd *vignettes/SDEFSRpackage.html
 e7f6d99a1d037c5b24041507e29888ff *vignettes/garcia-charte-gonzalez-carmona-deljesus.bibtex
 93586ddbd2592b9342c5ddac8d262ac5 *vignettes/salida.tex
