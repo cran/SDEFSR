@@ -28,7 +28,7 @@
 #'    
 #' @references J. Alcala-Fdez, A. Fernandez, J. Luengo, J. Derrac, S. Garcia, L. Sanchez, F. Herrera. KEEL Data-Mining Software Tool: Data Set Repository, Integration of Algorithms and Experimental Analysis Framework. Journal of Multiple-Valued Logic and Soft Computing 17:2-3 (2011) 255-287.
 #' 
-#' @seealso KEEL Dataset Repository (Standard Classification): \url{http://sci2s.ugr.es/keel/category.php?cat=clas}
+#' @seealso KEEL Dataset Repository (Standard Classification): \url{https://sci2s.ugr.es/keel/category.php?cat=clas}
 #'
 #' @examples
 #'     \dontrun{
@@ -160,7 +160,8 @@ read.dataset <- function(file, sep = ",", quote = "\"", dec = ".", na.strings = 
     lista
   } else if(ext == ".arff"){
     #Reads an ARFF from WEKA.
-    SDEFSR_DatasetFromARFF(file)
+    #SDEFSR_DatasetFromARFF(file)
+    readFromArff(file)
   } else if(ext == ".csv"){
     #Reads a CSV file
     SDEFSR_DatasetFromCSV(file, relation_name = basename(file), sep = sep, quote = quote, dec = dec, na.strings = na.strings)
@@ -926,7 +927,7 @@ read.dataset <- function(file, sep = ",", quote = "\"", dec = ".", na.strings = 
 #' @author Angel M. Garcia <amgv0009@@red.ujaen.es>
 #'
 #' @references J. Alcala-Fdez, A. Fernandez, J. Luengo, J. Derrac, S. Garcia, L. Sanchez, F. Herrera. KEEL Data-Mining Software Tool: Data Set Repository, Integration of Algorithms and Experimental Analysis Framework. Journal of Multiple-Valued Logic and Soft Computing 17:2-3 (2011) 255-287.
-#' @seealso KEEL Dataset Repository (Standard Classification): \url{http://sci2s.ugr.es/keel/category.php?cat=clas}
+#' @seealso KEEL Dataset Repository (Standard Classification): \url{https://sci2s.ugr.es/keel/category.php?cat=clas}
 #' 
 #' @noRd
 save.SDEFSR_Dataset <- function(dataset, file) {
@@ -1074,7 +1075,7 @@ save.SDEFSR_Dataset <- function(dataset, file) {
 #' @author Angel M. Garcia <amgv0009@@red.ujaen.es>
 #'
 #' @references J. Alcala-Fdez, A. Fernandez, J. Luengo, J. Derrac, S. Garcia, L. Sanchez, F. Herrera. KEEL Data-Mining Software Tool: Data Set Repository, Integration of Algorithms and Experimental Analysis Framework. Journal of Multiple-Valued Logic and Soft Computing 17:2-3 (2011) 255-287.
-#' @seealso KEEL Dataset Repository (Standard Classification): \url{http://sci2s.ugr.es/keel/category.php?cat=clas}
+#' @seealso KEEL Dataset Repository (Standard Classification): \url{https://sci2s.ugr.es/keel/category.php?cat=clas}
 #'
 #' @noRd
 addSDEFSR_DatasetRegister <- function(items, dataset) {
@@ -1191,6 +1192,30 @@ addSDEFSR_DatasetRegister <- function(items, dataset) {
 }
 
 
+#' 
+#' Reads an ARFF file
+#' 
+#' This function reads an ARFF file and get the subyacent \code{SDEFSR_Dataset} object
+#'
+#' @param file The ARFF file to read.
+#' 
+#' 
+#' 
+#' @return a 'SDEFSR_Dataset' object ready to use with the algorithms that are in the package
+#' @noRd
+#' 
+readFromArff <- function(file){
+  # Initial checks
+  #if(!require(foreign)) stop("'foreign' package not found.")
+  warnPrevio <- getOption("warn")
+  options(warn = -1)
+  
+  # Read arff data using foreign (returns a data.frame)
+  data <- foreign::read.arff(file)
+  
+  # Return the dataset.
+  readFromDataFrame(data)
+}
 
 #' 
 #' Reads an ARFF file
@@ -1207,11 +1232,11 @@ addSDEFSR_DatasetRegister <- function(items, dataset) {
 #' @noRd
 #' 
 SDEFSR_DatasetFromARFF <- function(file){
+ 
   warnPrevio <- getOption("warn")
   options(warn = -1)
   set <- read_arff(file)
   
-
   relation <- strsplit(set[[1]], " ")[[1]][2]
   
   #Make attribute names and types
@@ -1454,6 +1479,7 @@ SDEFSR_DatasetFromDataFrame <- function(data, relation, names = NA, types = NA, 
   #check data.frame
   if(! is.data.frame(data))
     stop(paste(substitute(data), "must be a data.frame"))
+  
   #Create the data.frame without factors
   data <- as.data.frame(lapply(data, function(x) if(is.factor(x)) as.character(x) else x), stringsAsFactors = F)
   #Check if the last attribute (class attribute) is categorical
@@ -1568,5 +1594,69 @@ SDEFSR_DatasetFromDataFrame <- function(data, relation, names = NA, types = NA, 
   lista
   
   
+}
+
+
+readFromDataFrame <- function(data){
+  
+  warnPrevio <- getOption("warn")
+  options(warn = -1)
+  
+  #check data.frame
+  if(! is.data.frame(data))
+    stop(paste(substitute(data), "must be a data.frame"))
+  
+  # Check column format (only numeric, character or factor)
+  if(! all(sapply(data, class) %in% c("character", "numeric", "factor"))){
+    incorrect <- which(! (sapply(data, class) %in% c("character", "numeric", "factor")))
+    stop(paste0("Column(s): ", incorrect, " have an incorrect format. Valid formats are numeric, character or factor"))
+  }
+  
+  # Everything is fine, let's process data
+  
+  # Get attribute names and types
+  attributeNames <- colnames(data)
+  categoricalVariables <- sapply(data, class) != "numeric"
+  
+  # if the last variable (class) is not categorical
+  if(! categoricalVariables[length(categoricalVariables)])
+    stop("Last value of the dataset is not categorical. We cannot create a dataset whose class is not categorical.")
+  
+  # get Number of variables 
+  nVars <- length(attributeNames) - 1
+  
+  # Get min and max 
+  min <- sapply(data, function(x) if(class(x) == "numeric") min(x) else NA)
+  max <- sapply(data, function(x) if(class(x) == "numeric") max(x) else NA)
+  
+  # Get categorical values for categorical variables
+  categoricalValues <- sapply(data, levels)
+  
+  # Get the class values:
+  classNames <- categoricalValues[[length(categoricalValues)]]
+  
+  # Get the number of examples for each class
+  examplesPerClass <- unlist(lapply(classNames, function(x) sum(data[, ncol(data)] == x)))
+  names(examplesPerClass) <- classNames
+  
+  # Create the dataset and return to the user.
+  lista <- list(
+    attributeNames = attributeNames,
+    attributeTypes = categoricalVariables,
+    min = min,
+    max = max,
+    nVars = nVars,
+    data = data,
+    class_names = classNames,
+    examplesPerClass = examplesPerClass,
+    fuzzySets = NA,
+    categoricalValues = categoricalValues,
+    Ns = nrow(data)
+  )
+  class(lista) <- "SDEFSR_Dataset"
+  
+  #Restore option warn of the user.
+  options(warn = warnPrevio)
+  lista
 }
 

@@ -4,12 +4,28 @@
 \alias{SDIGA}
 \title{Subgroup Discovery Iterative Genetic Algorithm (SDIGA)}
 \usage{
-SDIGA(parameters_file = NULL, training = NULL, test = NULL,
+SDIGA(
+  parameters_file = NULL,
+  training = NULL,
+  test = NULL,
   output = c("optionsFile.txt", "rulesFile.txt", "testQM.txt"),
-  seed = 0, nLabels = 3, nEval = 10000, popLength = 100,
-  mutProb = 0.01, RulesRep = "can", Obj1 = "CSUP", w1 = 0.7,
-  Obj2 = "CCNF", w2 = 0.3, Obj3 = "null", w3 = 0, minConf = 0.6,
-  lSearch = "yes", targetVariable = NA, targetClass = "null")
+  seed = 0,
+  nLabels = 3,
+  nEval = 10000,
+  popLength = 100,
+  mutProb = 0.01,
+  RulesRep = "can",
+  Obj1 = "CSUP",
+  w1 = 0.7,
+  Obj2 = "CCNF",
+  w2 = 0.3,
+  Obj3 = "null",
+  w3 = 0,
+  minConf = 0.6,
+  lSearch = "yes",
+  targetVariable = NA,
+  targetClass = "null"
+)
 }
 \arguments{
 \item{parameters_file}{The path of the parameters file. \code{NULL} If you want to use training and test \code{SDEFSR_Dataset} variables}

@@ -4,8 +4,10 @@
 \name{carTst}
 \alias{carTst}
 \title{Car evaluation dataset}
-\format{A SDEFSR_Dataset class with 346 instances, 6 variables (without the target variable) and 4 values for the target Variable.
-    Three labels for each variable are defined.}
+\format{
+A SDEFSR_Dataset class with 346 instances, 6 variables (without the target variable) and 4 values for the target Variable.
+    Three labels for each variable are defined.
+}
 \source{
 M. Bohanec and V. Rajkovic: Knowledge acquisition and explanation for multi-attribute 
     decision making. In 8th Intl Workshop on Expert Systems and their Applications, Avignon, 

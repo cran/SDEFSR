@@ -4,8 +4,10 @@
 \name{habermanTra}
 \alias{habermanTra}
 \title{Haberman survival data set}
-\format{A SDEFSR_Dataset class with 306 instances, 3 variables (without the target variable) and 2 values for the target variable.
-    Three fuzzy labels for each numerical variable are defined.}
+\format{
+A SDEFSR_Dataset class with 306 instances, 3 variables (without the target variable) and 2 values for the target variable.
+    Three fuzzy labels for each numerical variable are defined.
+}
 \source{
 Haberman, S. J. (1976). Generalized Residuals for Log-Linear Models, 
     Proceedings of the 9th International Biometrics Conference, Boston, pp. 104-122.

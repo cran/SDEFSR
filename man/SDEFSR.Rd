@@ -3,7 +3,6 @@
 \docType{package}
 \name{SDEFSR}
 \alias{SDEFSR}
-\alias{SDEFSR-package}
 \title{SDEFSR: A package for Subgroup Discovery with Evolutionary Fuzzy Systems in R}
 \description{
 The SDEFSR package provide a tool for read KEEL datasets and four evolutionary fuzzy rule-based 

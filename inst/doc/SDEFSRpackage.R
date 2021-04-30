@@ -1,15 +1,15 @@
-## ----eval=FALSE----------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  install.packages("SDEFSR")
 
-## ----eval=FALSE----------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  devtools::install_github('aklxao2/SDEFSR')
 
-## ----eval=FALSE----------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  irisFromKEEL <- read.dataset("iris.dat")
 #  irisFromARFF <- read.dataset("iris.arff")
 #  irisFromCSV <- read.dataset("iris.csv")
 
-## ----highlight=TRUE------------------------------------------------------
+## ----highlight=TRUE-----------------------------------------------------------
 library(SDEFSR)
 df <- data.frame(matrix(data = runif(1000), ncol = 10))
 #Add class attribute (It must be the last attribute and it must be categorical)
@@ -18,17 +18,17 @@ SDEFSR_DatasetObject <- SDEFSR_DatasetFromDataFrame(df, relation = "random")
 #Load from iris dataset
 irisFromDataFrame <- SDEFSR_DatasetFromDataFrame(iris, "iris")
 
-## ----highlight=TRUE------------------------------------------------------
+## ----highlight=TRUE-----------------------------------------------------------
 summary(irisFromDataFrame)
 
-## ----highlight=TRUE------------------------------------------------------
+## ----highlight=TRUE-----------------------------------------------------------
 irisFromDataFrame$nVars
 irisFromDataFrame$attributeNames
 
-## ----eval=FALSE----------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  > ruleSet <- MESDIF(paramFile = "param.txt")
 
-## ----eval=TRUE,highlight=TRUE--------------------------------------------
+## ----eval=TRUE,highlight=TRUE-------------------------------------------------
 ruleSet <- MESDIF(paramFile = NULL, 
                   training = irisFromDataFrame, 
                   test = NULL,
@@ -48,14 +48,14 @@ ruleSet <- MESDIF(paramFile = NULL,
                   targetVariable = "Species",
                   targetClass = "virginica")
 
-## ----highlight=FALSE-----------------------------------------------------
+## ----highlight=FALSE----------------------------------------------------------
 library(ggplot2)
 plot(ruleSet)
 
-## ----eval=FALSE----------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  	rulesOrderedBySignificance <- orderRules(ruleSet, by = "Significance")
 
-## ----eval=TRUE-----------------------------------------------------------
+## ----eval=TRUE----------------------------------------------------------------
 #Apply filter by unusualness
 filteredRules <- ruleSet[Unusualness > 0.05]
 #We check only if the number of rules decrease.
@@ -70,6 +70,6 @@ filteredRules <- ruleSet[Unusualness > 0.05 & TPr > 0.9 & nVars == 3]
 #number of rules must be 0.
 length(filteredRules) 
 
-## ----eval=FALSE----------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  SDR_GUI()
 

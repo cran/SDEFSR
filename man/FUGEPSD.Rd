@@ -4,14 +4,28 @@
 \alias{FUGEPSD}
 \title{Fuzzy Genetic Programming-based learning for Subgroup Discovery (FuGePSD) Algorithm.}
 \usage{
-FUGEPSD(paramFile = NULL, training = NULL, test = NULL,
+FUGEPSD(
+  paramFile = NULL,
+  training = NULL,
+  test = NULL,
   output = c("optionsFile.txt", "rulesFile.txt", "testQM.txt"),
-  seed = 0, nLabels = 3, t_norm = "product_t-norm",
-  ruleWeight = "Certainty_Factor", frm = "Normalized_Sum",
-  numGenerations = 300, numberOfInitialRules = 100, crossProb = 0.5,
-  mutProb = 0.2, insProb = 0.15, dropProb = 0.15,
-  tournamentSize = 2, globalFitnessWeights = c(0.7, 0.1, 0.05, 0.2),
-  minCnf = 0.6, ALL_CLASS = TRUE, targetVariable = NA)
+  seed = 0,
+  nLabels = 3,
+  t_norm = "product_t-norm",
+  ruleWeight = "Certainty_Factor",
+  frm = "Normalized_Sum",
+  numGenerations = 300,
+  numberOfInitialRules = 100,
+  crossProb = 0.5,
+  mutProb = 0.2,
+  insProb = 0.15,
+  dropProb = 0.15,
+  tournamentSize = 2,
+  globalFitnessWeights = c(0.7, 0.1, 0.05, 0.2),
+  minCnf = 0.6,
+  ALL_CLASS = TRUE,
+  targetVariable = NA
+)
 }
 \arguments{
 \item{paramFile}{The path of the parameters file. \code{NULL} If you want to use training and test \code{SDEFSR_Dataset} variables}

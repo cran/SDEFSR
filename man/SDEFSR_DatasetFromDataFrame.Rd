@@ -4,8 +4,13 @@
 \alias{SDEFSR_DatasetFromDataFrame}
 \title{Creates a \code{SDEFSR_Dataset} object from a \code{data.frame}}
 \usage{
-SDEFSR_DatasetFromDataFrame(data, relation, names = NA, types = NA,
-  classNames = NA)
+SDEFSR_DatasetFromDataFrame(
+  data,
+  relation,
+  names = NA,
+  types = NA,
+  classNames = NA
+)
 }
 \arguments{
 \item{data}{A \code{data.frame} object with all neccesary information. See details.}

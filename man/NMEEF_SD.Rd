@@ -4,13 +4,27 @@
 \alias{NMEEF_SD}
 \title{Non-dominated Multi-objective Evolutionary algorithm for Extracting Fuzzy rules in Subgroup Discovery (NMEEF-SD)}
 \usage{
-NMEEF_SD(paramFile = NULL, training = NULL, test = NULL,
+NMEEF_SD(
+  paramFile = NULL,
+  training = NULL,
+  test = NULL,
   output = c("optionsFile.txt", "rulesFile.txt", "testQM.txt"),
-  seed = 0, nLabels = 3, nEval = 10000, popLength = 100,
-  mutProb = 0.1, crossProb = 0.6, Obj1 = "CSUP", Obj2 = "CCNF",
-  Obj3 = "null", minCnf = 0.6, reInitCoverage = "yes",
-  porcCob = 0.5, StrictDominance = "yes", targetVariable = NA,
-  targetClass = "null")
+  seed = 0,
+  nLabels = 3,
+  nEval = 10000,
+  popLength = 100,
+  mutProb = 0.1,
+  crossProb = 0.6,
+  Obj1 = "CSUP",
+  Obj2 = "CCNF",
+  Obj3 = "null",
+  minCnf = 0.6,
+  reInitCoverage = "yes",
+  porcCob = 0.5,
+  StrictDominance = "yes",
+  targetVariable = NA,
+  targetClass = "null"
+)
 }
 \arguments{
 \item{paramFile}{The path of the parameters file. \code{NULL} If you want to use training and test \code{SDEFSR_Dataset} variables}

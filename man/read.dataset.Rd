@@ -4,8 +4,7 @@
 \alias{read.dataset}
 \title{Reads a KEEL, ARFF or CSV data format file.}
 \usage{
-read.dataset(file, sep = ",", quote = "\\"", dec = ".",
-  na.strings = "?")
+read.dataset(file, sep = ",", quote = "\\"", dec = ".", na.strings = "?")
 }
 \arguments{
 \item{file}{The path of the file to read}
@@ -39,14 +38,14 @@ A KEEL data file must have the following structure:
 \examples{
     \dontrun{
        Reads a KEEL dataset from a file.
-       read.dataset(file = "C:\\KEELFile.dat")
+       read.dataset(file = "C:\KEELFile.dat")
 
-       read.dataset(file = "C:\\KEELFile.dat", nLabels = 7)
+       read.dataset(file = "C:\KEELFile.dat", nLabels = 7)
        
      Reads an ARFF dataset from a file.
-       read.dataset(file = "C:\\ARFFFile.arff")
+       read.dataset(file = "C:\ARFFFile.arff")
 
-       read.dataset(file = "C:\\ARFFFile.arff", nLabels = 7)
+       read.dataset(file = "C:\ARFFFile.arff", nLabels = 7)
     }
     
 }
@@ -54,7 +53,7 @@ A KEEL data file must have the following structure:
 J. Alcala-Fdez, A. Fernandez, J. Luengo, J. Derrac, S. Garcia, L. Sanchez, F. Herrera. KEEL Data-Mining Software Tool: Data Set Repository, Integration of Algorithms and Experimental Analysis Framework. Journal of Multiple-Valued Logic and Soft Computing 17:2-3 (2011) 255-287.
 }
 \seealso{
-KEEL Dataset Repository (Standard Classification): \url{http://sci2s.ugr.es/keel/category.php?cat=clas}
+KEEL Dataset Repository (Standard Classification): \url{https://sci2s.ugr.es/keel/category.php?cat=clas}
 }
 \author{
 Angel M. Garcia <agvico@ujaen.es>

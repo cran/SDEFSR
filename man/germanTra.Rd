@@ -4,10 +4,12 @@
 \name{germanTra}
 \alias{germanTra}
 \title{German Credit data set}
-\format{A SDEFSR_Dataset class with 800 instances, 20 variables (without the target variable)
-    and 2 values for the target class.}
+\format{
+A SDEFSR_Dataset class with 800 instances, 20 variables (without the target variable)
+    and 2 values for the target class.
+}
 \source{
-\url{http://sci2s.ugr.es/keel/dataset.php?cod=88}
+\url{https://sci2s.ugr.es/keel/dataset.php?cod=88}
 }
 \description{
 Training data for the german dataset

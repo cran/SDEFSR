@@ -149,7 +149,7 @@ NULL
 #' @format A SDEFSR_Dataset class with 800 instances, 20 variables (without the target variable)
 #'     and 2 values for the target class.
 #'     
-#' @source \url{http://sci2s.ugr.es/keel/dataset.php?cod=88}
+#' @source \url{https://sci2s.ugr.es/keel/dataset.php?cod=88}
 #'  
 #' @examples 
 #'      germanTra$data
@@ -173,7 +173,7 @@ NULL
 #' @format A SDEFSR_Dataset class with 200 instances, 20 variables (without the target variable)
 #'     and 2 values for the target class.
 #'     
-#' @source \url{http://sci2s.ugr.es/keel/dataset.php?cod=88}
+#' @source \url{https://sci2s.ugr.es/keel/dataset.php?cod=88}
 #'  
 #' @examples 
 #'      germanTra$data
